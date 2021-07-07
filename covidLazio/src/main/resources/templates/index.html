@@ -4,17 +4,23 @@
 </head>
 <body>
 
+<div class = "all">
 
-
-<header th:replace="fragments/base.html :: intestazione">
+<header th:replace="fragments/base.html :: menu">
 </header>
 
-<div id="blocco-presentazione">
-    <h3 id="testo-presentazione">Il nostro sito nasce con l’intento di aggiornare gli utenti iscritti con le ultime informazioni in tema Covid,
+
+<div class="main_content">
+        <div class="header">Welcome!! Have a nice day.</div>  
+        <div class="info">
+          <div>Il nostro sito nasce con l’intento di aggiornare gli utenti iscritti con le ultime informazioni in tema Covid,
         informarli su dove acquistare prodotti per la sicurezza personale e
         permettere loro di prenotare tamponi nelle varie farmacie disponibili,
         con un focus particolare sulle piccole comunità come paesi e località all’interno della regione Lazio.
-        Per questo per accedere è necessario iscriversi o effettuare il login</h3>
+        Per questo per accedere è necessario iscriversi o effettuare il login 
+         </div>
+       </div>
+    </div>
 </div>
 
 <footer th:replace="fragments/base.html :: fondo">

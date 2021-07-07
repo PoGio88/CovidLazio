@@ -8,13 +8,23 @@
 </head>
 <body>
 
-<header th:fragment=intestazione>
-  <h1>COVID LAZIO</h1>
-</header>
+<header th:fragment=menu>
+  <div class="sidebar">
+        <h2>Covid Lazio</h2>
+        <ul>
+            <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="#"><i class="fas fa-user"></i>Profilo</a></li>
+            <li><a href="#"><i class="fas fa-address-card"></i>Su di noi</a></li>
+            <li><a href="#"><i class="fas fa-project-diagram"></i>Login</a></li>
+            <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
+            <li><a href="#"><i class="fas fa-address-book"></i>Contatti</a></li>
+            <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
+        </ul> 
+    </div>
+    </header>
 
-
-<footer th:fragment="fondo">
-  <ul>
+<footer th:fragment="fondo" class = "info">
+  <ul id="fondo-testo">
     <li> realizzato da Daniele Pica e Giorgio Poggini</li>
   </ul>
 </footer>
