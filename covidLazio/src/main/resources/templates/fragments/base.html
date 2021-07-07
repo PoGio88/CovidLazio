@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerfiles(title)">
+  <meta charset="UTF-8"/>
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+  <title th:text="${title}"></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<header th:fragment=intestazione>
+  <h1>COVID LAZIO</h1>
+</header>
+
+
+<footer th:fragment="fondo">
+  <ul>
+    <li> realizzato da Daniele Pica e Giorgio Poggini</li>
+  </ul>
+</footer>
+
+
+</body>
+</html>

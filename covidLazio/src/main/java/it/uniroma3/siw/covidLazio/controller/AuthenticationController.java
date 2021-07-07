@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import it.uniroma3.siw.covidLazio.model.Amministratore;
 import it.uniroma3.siw.covidLazio.model.Credentials;
 import it.uniroma3.siw.covidLazio.service.CredentialsService;
-import it.uniroma3.siw.covidLazio.validator.CredentialsValidator;
-import it.uniroma3.siw.covidLazio.validator.UtenteValidator;
+import it.uniroma3.siw.covidLazio.controller.validator.*;
 
 
 
@@ -26,7 +25,7 @@ public class AuthenticationController {
 	
 	@Autowired
 	private UtenteValidator utenteValidator;
-	
+
 	@Autowired
 	private CredentialsValidator credentialsValidator;
 
