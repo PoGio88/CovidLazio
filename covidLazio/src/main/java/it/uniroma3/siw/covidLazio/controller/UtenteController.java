@@ -2,6 +2,8 @@ package it.uniroma3.siw.covidLazio.controller;
 
 
 import it.uniroma3.siw.covidLazio.model.Credentials;
+import it.uniroma3.siw.covidLazio.model.Locale;
+import it.uniroma3.siw.covidLazio.model.Negozio;
 import it.uniroma3.siw.covidLazio.model.Utente;
 import it.uniroma3.siw.covidLazio.model.Vaccino;
 
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.uniroma3.siw.covidLazio.service.CredentialsService;
 import it.uniroma3.siw.covidLazio.service.UtenteService;
+import static it.uniroma3.siw.covidLazio.model.Credentials.DIPENDENTE_ROLE;
 
 
 
@@ -79,6 +82,24 @@ public class UtenteController {
 		this.utenteService.aggiornaUtente(utenteCorrente);
 		return "index.html";
 	}
+	
+	@RequestMapping(value = "/aggiungiNegozio", method = RequestMethod.GET)
+    public String aggiungiNegozio(Model model) {
+        model.addAttribute("locale",new Negozio());
+        model.addAttribute("localita",comuniService.tutteLeLocalita());
+        return "utente/negozioForm.html";
+    }
+    
+    @RequestMapping(value = {"/aggiungiNegozio"}, method = RequestMethod.POST)
+    public String aggiungiNegozio(@ModelAttribute("locale") Locale negozio, Model model) {
+		Utente utenteCorrente = getUtenteCorrente();
+    	utenteCorrente.setLocale(negozio);
+    	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+		credentials.setRole(DIPENDENTE_ROLE);
+    	this.utenteService.aggiornaUtente(utenteCorrente);
+    	return "index.html";
+    }
 
 	private Utente getUtenteCorrente() {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -28,11 +28,14 @@ public class Utente {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Vaccino vaccino;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Locale locale;
 
 	@ManyToOne
 	private Localita localita;
+	
+
+	
 
 }
 

@@ -21,4 +21,7 @@ public class Localita {
 
     @OneToMany(mappedBy = "localita")
     private List<Utente> utenti;
+    
+    @OneToMany(mappedBy = "localitaNegozio")
+    private List<Negozio> negozi;
 }

@@ -24,6 +24,9 @@ public abstract class Locale {
     private LocalDateTime orarioChiusura;
 
     private URI sitoWeb;
+    
+    @ManyToOne
+    private Localita localitaNegozio;
 
     @OneToMany
     private List<Prodotto> prodotti;
