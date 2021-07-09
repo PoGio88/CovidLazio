@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 @Data
@@ -18,7 +21,9 @@ public class Vaccino {
 
     private String tipologia;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataPrimaDose;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataSecondaDose;
 }

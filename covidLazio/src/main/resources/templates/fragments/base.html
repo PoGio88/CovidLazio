@@ -22,6 +22,20 @@
         </ul> 
     </div>
     </header>
+    
+  <header th:fragment=menuUtente>
+  <div class="sidebarUtente">
+        <h2>Covid Lazio</h2>
+        <ul>
+            <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
+            <li><a th:href="@{/logout}"><i class="fas fa-project-diagram"></i>Logout</a></li>
+            <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
+            <li><a th:href="@{/aggiungiVaccino}"><i class="fas fa-address-book"></i>Vaccino</a></li>
+            <li><a href="#"><i class="fas fa-address-book"></i>Contatti</a></li>
+            <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
+        </ul> 
+    </div>
+    </header>
 
 <footer th:fragment="fondo" class = "info">
   <ul id="fondo-testo">

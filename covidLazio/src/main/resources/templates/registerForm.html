@@ -13,49 +13,39 @@
     <div class="main_content">
         <div class="header">Welcome!! Have a nice day.</div>
         <div class="info">
+        <div class="register-box">
+    <img th:src="@{images/avatar.png}" class="avatar">
             <form th:action="@{/register}" method="POST">
-                <table>
-                    <tr>
-                        <td>Username</td>
-                        <td><input type="text" placeholder="username" th:field="${credentials.username}"/></td>
-                        <td th:if="${#fields.hasErrors('credentials.username')}"
-                            th:errors="${credentials.username}" th:style="'color:red'"></td>
-                    </tr>
-                    <tr>
-                        <td>Password</td>
-                        <td><input type="password" placeholder="password" required th:field="${credentials.password}"/>
-                        </td>
-                        <td th:if="${#fields.hasErrors('credentials.password')}"
-                            th:errors="${credentials.password}" th:style="'color:red'"></td>
-                    </tr>
-                    <tr>
-                        <td>Nome</td>
-                        <td><input type="text" placeholder="nome" required th:field="${user.nome}"/></td>
-                        <td th:if="${#fields.hasErrors('user.nome')}"
-                            th:errors="${user.nome}" th:style="'color:red'"></td>
-                    </tr>
-                    <tr>
-                        <td>Cognome</td>
-                        <td><input type="text" placeholder="cognome" required th:field="${user.cognome}"/></td>
-                        <td th:if="${#fields.hasErrors('user.cognome')}"
-                            th:errors="${user.cognome}" th:style="'color:red'"></td>
-                    </tr>
-                    <tr>
-                        <td>Email</td>
-                        <td><input type="text" placeholder="email" th:field="${user.email}"></td>
-                    </tr>
-                    <tr>
-                    <tr>
-                        <td>Data di nascita</td>
-                        <td><input type="date" th:field="${user.dataNascita}"></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button type="submit">Registra</button>
-                        </td>
-                    </tr>
-                </table>
+                <span>Username</span>
+                        <span><input type="text" placeholder="username" th:field="${credentials.username}"/></span>
+                        <span th:if="${#fields.hasErrors('credentials.username')}"
+                            th:errors="${credentials.username}" th:style="'color:red'"></span>
+                
+                        <span>Password</span>
+                        <span><input type="password" placeholder="password" required th:field="${credentials.password}"/>
+                        </span>
+                        <span th:if="${#fields.hasErrors('credentials.password')}"
+                            th:errors="${credentials.password}" th:style="'color:red'"></span>
+                  
+                        <span>Nome</span>
+                        <span><input type="text" placeholder="nome" required th:field="${user.nome}"/></span>
+                        <span th:if="${#fields.hasErrors('user.nome')}"
+                            th:errors="${user.nome}" th:style="'color:red'"></span>
+                    
+                        <span>Cognome</span>
+                        <span><input type="text" placeholder="cognome" required th:field="${user.cognome}"/></span>
+                        <span th:if="${#fields.hasErrors('user.cognome')}"
+                            th:errors="${user.cognome}" th:style="'color:red'"></span>
+                    
+                        <span>Email</span>
+                        <span><input type="text" placeholder="email" th:field="${user.email}"></span>
+                    
+                        <span>Data di nascita</span>
+                        <span><input type="date" th:field="${user.dataNascita}"></span>
+                   
+                            <span><input type="submit" value ="Registrati"></input></span>
             </form>
+        </div>
         </div>
     </div>
 </div>

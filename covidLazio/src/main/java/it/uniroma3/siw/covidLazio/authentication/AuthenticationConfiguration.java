@@ -2,6 +2,8 @@ package it.uniroma3.siw.covidLazio.authentication;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import static it.uniroma3.siw.covidLazio.model.Credentials.UTENTE_ROLE;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 
 
 import javax.sql.DataSource;
@@ -31,11 +32,13 @@ public class AuthenticationConfiguration extends WebSecurityConfigurerAdapter {
                 // authorization paragraph: qui definiamo chi può accedere a cosa
                 .authorizeRequests()
                 // chiunque (autenticato o no) può accedere alle pagine index, login, register, ai css e alle immagini
-                .antMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/css/**", "/images/**","/visualizzaOpere", "/visualizzaArtisti","/artista/**","/collezioni","/collezione/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/css/**", "/images/**").permitAll()
                 // chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login e register 
                 .antMatchers(HttpMethod.POST, "/login", "/register").permitAll()
                 // solo gli utenti autenticati con ruolo ADMIN possono accedere a risorse con path /admin/**
-
+                .antMatchers(HttpMethod.GET, "/utente/**").hasAnyAuthority(UTENTE_ROLE)
+                .antMatchers(HttpMethod.POST, "/utente/**").hasAnyAuthority(UTENTE_ROLE)
+                
                 // tutti gli utenti autenticati possono accere alle pagine rimanenti 
                 .anyRequest().authenticated()
 
