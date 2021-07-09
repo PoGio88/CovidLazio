@@ -4,6 +4,8 @@ package it.uniroma3.siw.covidLazio.controller;
 import it.uniroma3.siw.covidLazio.model.Credentials;
 import it.uniroma3.siw.covidLazio.model.Utente;
 import it.uniroma3.siw.covidLazio.model.Vaccino;
+import it.uniroma3.siw.covidLazio.repository.VaccinoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -51,9 +53,17 @@ public class UtenteController {
     public String aggiungiVaccino(@ModelAttribute("vaccino") Vaccino vaccino, Model model) {
     	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-    	utenteService.inserisciVaccino(vaccino);
     	Utente utenteCorrente = this.utenteService.utentePerId(credentials.getUtente().getId());
+    	Vaccino vaccinoFinale = utenteCorrente.getVaccino();
+    	if(vaccinoFinale != null) {
+    	vaccinoFinale.setTipologia(vaccino.getTipologia());
+    	vaccinoFinale.setDataPrimaDose(vaccino.getDataPrimaDose());
+    	vaccinoFinale.setDataSecondaDose(vaccino.getDataSecondaDose());
+    	utenteCorrente.setVaccino(vaccinoFinale);
+    	} else {
+    	utenteService.inserisciVaccino(vaccino);
     	utenteCorrente.setVaccino(vaccino);
+    	}
     	this.utenteService.aggiornaUtente(utenteCorrente);
     	return "index.html";
         
