@@ -1,10 +1,11 @@
 package it.uniroma3.siw.covidLazio.controller.validator;
 
+import it.uniroma3.siw.covidLazio.model.Utente;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import it.uniroma3.siw.covidLazio.model.Amministratore;
+
 
 
 @Component
@@ -15,7 +16,7 @@ public class UtenteValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        Amministratore user = (Amministratore) o;
+        Utente user = (Utente) o;
         String nome = user.getNome().trim();
         String cognome = user.getCognome().trim();
 
@@ -32,7 +33,7 @@ public class UtenteValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return Amministratore.class.equals(clazz);
+        return Utente.class.equals(clazz);
     }
 
 }

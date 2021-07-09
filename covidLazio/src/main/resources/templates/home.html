@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+</head>
+<body>
+
+<div class = "all">
+
+  <header th:replace="fragments/base.html :: menu">
+  </header>
+
+
+  <div class="main_content">
+    <div class="header">Welcome!! Have a nice day.</div>
+    <div class="info">
+      <div>
+        <span th:text="${utente.nome} + ' ' + ${utente.cognome}"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer th:replace="fragments/base.html :: fondo">
+</footer>
+
+</body>
+</html>

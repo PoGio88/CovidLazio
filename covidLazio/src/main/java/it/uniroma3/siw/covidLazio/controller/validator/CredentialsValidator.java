@@ -1,11 +1,10 @@
 package it.uniroma3.siw.covidLazio.controller.validator;
 
+import it.uniroma3.siw.covidLazio.model.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
-import it.uniroma3.siw.covidLazio.model.Amministratore;
 import it.uniroma3.siw.covidLazio.model.Credentials;
 import it.uniroma3.siw.covidLazio.service.CredentialsService;
 
@@ -44,7 +43,7 @@ public class CredentialsValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return Amministratore.class.equals(clazz);
+        return Utente.class.equals(clazz);
     }
 
 }
