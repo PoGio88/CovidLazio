@@ -4,43 +4,63 @@
 </head>
 <body>
 
-<div class = "all">
+<div class="all">
 
-  <header th:replace="fragments/base.html :: menuUtente">
-  </header>
+    <header th:replace="fragments/base.html :: menuUtente">
+    </header>
 
 
-  <div class="main_content">
-    <div class="header">Welcome!! Have a nice day.</div>
-    <div class="info">
-    <div th:if = "${vaccinoInserito == null} "class="login-box">
-     <form th:action="@{/aggiungiVaccino}" method="POST" th:object = "${vaccino}">
-          <div>Tipologia
-          <select name="Tipologia" th:field="*{tipologia}">
-          <option value = "Pfitzer">Pfitzer</option>
-          <option value = "Astrazeneca">Astrazeneca</option>
-          <option value = "Moderna">Moderna</option>
-          <option value = "J&J">J&J</option>
-          </select>
-          </div>
-          <span>Data prima dose:</span>
-          <span><input type="date" th:field="${vaccino.dataPrimaDose}" required /></span>
-          <span>Data seconda dose:</span>
-          <span><input type="date" th:field="${vaccino.dataSecondaDose}"> </input> </span>
-          <span> <input type = "submit" value ="Aggiungi" > </span>
-      </form>
+    <div class="main_content">
+        <div class="header">Welcome!! Have a nice day.</div>
+        <div class="info">
+            <div th:if="${vaccino} " class="login-box">
+                <form th:action="@{/aggiungiVaccino}" method="POST" th:object="${vaccino}">
+                    <div>Tipologia
+                        <select name="Tipologia" th:field="*{tipologia}">
+                            <option value="Pfitzer">Pfitzer</option>
+                            <option value="Astrazeneca">Astrazeneca</option>
+                            <option value="Moderna">Moderna</option>
+                            <option value="J&J">J&J</option>
+                        </select>
+                    </div>
+                    <span>Data prima dose:</span>
+                    <span><input type="date" th:field="${vaccino.dataPrimaDose}" required/></span>
+                    <span>Data seconda dose:</span>
+                    <span><input type="date" th:field="${vaccino.dataSecondaDose}"></span>
+                    <span> <input type="submit" value="Aggiungi"> </span>
+                </form>
+            </div>
+
+            <div th:if="${vaccinoDaAggiornare}" class="login-box">
+                <form th:action="@{/aggiornaVaccino}" method="POST" th:object="${vaccinoDaAggiornare}">
+                    <div>Tipologia
+                        <select name="Tipologia" th:field="*{tipologia}">
+                            <option value="Pfitzer">Pfitzer</option>
+                            <option value="Astrazeneca">Astrazeneca</option>
+                            <option value="Moderna">Moderna</option>
+                            <option value="J&J">J&J</option>
+                        </select>
+                    </div>
+                    <span>Data prima dose:</span>
+                    <span><input type="date" th:field="${vaccinoDaAggiornare.dataPrimaDose}" required/></span>
+                    <span>Data seconda dose:</span>
+                    <span><input type="date" th:field="${vaccinoDaAggiornare.dataSecondaDose}"></span>
+                    <span> <input type="submit" value="Aggiungi"> </span>
+                </form>
+            </div>
+
+
+            <div th:if="${vaccinoInserito}" class="login-box">
+                <div><h2>Hai già inserito il tuo vaccino!</h2></div>
+                <div>Ecco i tuoi dati:</div>
+                <div th:text="'Tipologia: '+${vaccinoInserito.tipologia}"></div>
+                <div th:text="'Data prima dose: '+${vaccinoInserito.dataPrimaDose}"></div>
+                <div th:if="${vaccinoInserito.dataSecondaDose != null}"
+                     th:text="'Data seconda dose: '+${vaccinoInserito.dataSecondaDose}"></div>
+                <div><a th:href="@{/aggiornaVaccino}">Aggiorna dati!</a></div>
+            </div>
+        </div>
     </div>
-    
-    <div th:unless = "${vaccinoInserito == null}" class ="login-box">
-    <div><h2>Hai già inserito il tuo vaccino!</h2> </div>
-     <div>Ecco i tuoi dati:</div>
-     <div th:text = "'Tipologia: '+${vaccinoInserito.tipologia}"> </div>
-     <div th:text = "'Data prima dose: '+${vaccinoInserito.dataPrimaDose}"> </div>
-     <div th:if = "${vaccinoInserito.dataSecondaDose != null}" th:text = "'Data seconda dose: '+${vaccinoInserito.dataSecondaDose}"> </div>
-     <div><a th:href="@{/aggiornaVaccino}">Aggiorna dati!</a> </div>
-    </div>
-    </div>
-  </div>
 </div>
 
 <footer th:replace="fragments/base.html :: fondo">

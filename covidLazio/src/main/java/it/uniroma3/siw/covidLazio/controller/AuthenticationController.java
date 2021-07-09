@@ -2,6 +2,7 @@ package it.uniroma3.siw.covidLazio.controller;
 
 import it.uniroma3.siw.covidLazio.model.Utente;
 import it.uniroma3.siw.covidLazio.model.Vaccino;
+import it.uniroma3.siw.covidLazio.service.ComuniService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,12 +30,15 @@ public class AuthenticationController {
     @Autowired
     private CredentialsValidator credentialsValidator;
 
+    @Autowired
+    private ComuniService comuniService;
+
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String showRegisterForm(Model model) {
         model.addAttribute("user", new Utente());
         model.addAttribute("credentials", new Credentials());
-        model.addAttribute("vaccino", new Vaccino());
+        model.addAttribute("localita",comuniService.tutteLeLocalita());
         return "registerForm";
     }
 
@@ -76,7 +80,6 @@ public class AuthenticationController {
             credentialsService.saveCredentials(credentials);
             return "index.html";
         }
-        System.out.println(userBindingResult);
         return "registerForm.html";
     }
 }

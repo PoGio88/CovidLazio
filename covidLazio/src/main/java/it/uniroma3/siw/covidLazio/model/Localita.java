@@ -19,6 +19,6 @@ public class Localita {
 
     private String CAP;
 
-    //@OneToMany(mappedBy = "localita")
-    //private List<Utente> utenti;
+    @OneToMany(mappedBy = "localita")
+    private List<Utente> utenti;
 }

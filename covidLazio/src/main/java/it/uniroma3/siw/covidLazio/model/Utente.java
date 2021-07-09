@@ -25,7 +25,7 @@ public class Utente {
 
 	private String email;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Vaccino vaccino;
 
 	@OneToOne

@@ -39,6 +39,11 @@
                     
                         <span>Email</span>
                         <span><input type="text" placeholder="email" th:field="${user.email}"></span>
+
+                        <span>Localita</span>
+                        <span><select th:field = "${user.localita}" >
+                            <option th:each="loc : ${localita}" th:text="${loc.nome}" th:value="${loc.id}"></option>
+                        </select> </span>
                     
                         <span>Data di nascita</span>
                         <span><input type="date" th:field="${user.dataNascita}"></span>
