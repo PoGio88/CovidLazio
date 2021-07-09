@@ -23,5 +23,5 @@ public class Localita {
     private List<Utente> utenti;
     
     @OneToMany(mappedBy = "localitaNegozio")
-    private List<Negozio> negozi;
+    private List<Locale> negozi;
 }

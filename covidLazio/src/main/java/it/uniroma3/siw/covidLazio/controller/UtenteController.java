@@ -86,7 +86,7 @@ public class UtenteController {
 	@RequestMapping(value = "/aggiungiNegozio", method = RequestMethod.GET)
     public String aggiungiNegozio(Model model) {
         model.addAttribute("locale",new Negozio());
-        model.addAttribute("localita",comuniService.tutteLeLocalita());
+        model.addAttribute("localita", comuniService.tutteLeLocalita());
         return "utente/negozioForm.html";
     }
     
