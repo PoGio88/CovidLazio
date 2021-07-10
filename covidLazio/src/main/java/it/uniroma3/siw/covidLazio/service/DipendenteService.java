@@ -1,16 +1,26 @@
 package it.uniroma3.siw.covidLazio.service;
 
 import it.uniroma3.siw.covidLazio.model.Locale;
+import it.uniroma3.siw.covidLazio.model.Negozio;
+import it.uniroma3.siw.covidLazio.model.Prodotto;
 import it.uniroma3.siw.covidLazio.repository.LocaleRepository;
+import it.uniroma3.siw.covidLazio.repository.ProdottoRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 public class DipendenteService {
 
     @Autowired
     private LocaleRepository localeRepository;
+    
+    @Autowired 
+    private ProdottoRepository prodottoRepositoy;
 
     @Transactional
     public Locale localePerId(Long id) {
@@ -19,4 +29,9 @@ public class DipendenteService {
 
     @Transactional
     public Locale aggiornaLocale(Locale locale) { return localeRepository.save(locale); }
+    
+    @Transactional
+    public List<Prodotto> prodottiPerLocale(Negozio locale){
+    	return this.prodottoRepositoy.findByNegozio(locale);
+    }
 }

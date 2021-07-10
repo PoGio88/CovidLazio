@@ -35,11 +35,25 @@
           <span th:text="${locale.orarioChiusura}"></span>
         </div>
       </div>
+      
+      <div class ="catalogo-prodotti-box"> 
+        <div> Catalogo prodotti in negozio </div>
+        <div th:if="${!prodotti.isEmpty()}" th:each ="prod : ${prodotti}">
+         <div th:text ="${prod.nome}"> </div>
+         <div th:if ="${prod.disponibile}">Disponibile </div>
+         <div th:unless ="${prod.disponibile}">Non disponibile </div>
+         </div>
+        </div>
+        <div th:unless="${!prodotti.isEmpty()}"> 
+        <div> Non hai aggiunto nessun prodotto al negozio </div>
+      </div>
+      
 
 
     </div>
   </div>
 </div>
+
 
 
 <footer th:replace="fragments/base.html :: fondo">

@@ -32,7 +32,9 @@ public abstract class Locale {
     @ManyToOne
     private Localita localitaNegozio;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "negozio")
     private List<Prodotto> prodotti;
+    
+    
 
 }
