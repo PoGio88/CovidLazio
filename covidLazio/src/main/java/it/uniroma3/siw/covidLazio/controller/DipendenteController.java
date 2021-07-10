@@ -41,6 +41,7 @@ public class DipendenteController {
     public String aggiungiProdotto(@PathVariable("id") Long id,@ModelAttribute("prodotto") Prodotto prodotto, Model model) {
         Locale locale = dipendenteService.localePerId(id);
         locale.getProdotti().add(prodotto);
+        prodotto.setNegozio((Negozio) locale);
         dipendenteService.aggiornaLocale(locale);
         model.addAttribute("locale", locale);
         return "dipendente/gestioneNegozio.html";
