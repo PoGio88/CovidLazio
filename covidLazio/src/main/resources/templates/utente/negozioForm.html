@@ -16,59 +16,29 @@
             <div class="login-box">
                 <form th:action="@{/aggiungiNegozio}" method="POST" th:object="${locale}">
                     <div>
-                    <span>Nome negozio</span>
-                    <span><input type="text" th:field="${locale.nome}" required/></span>
+                        <span>Nome negozio</span>
+                        <span><input type="text" th:field="${locale.nome}" required/></span>
                     </div>
                     <div>
-                    <span>Sito web</span>
-                    <span><input type="url" th:field="${locale.sitoWeb}"></span>
+                        <span>Sito web</span>
+                        <span><input type="url" th:field="${locale.sitoWeb}"></span>
                     </div>
                     <div>
-                    <span> Orario apertura </span>
-                    <span> <input type = "datetime-local" th:field = "${locale.orarioApertura}"> </span>
+                        <span> Orario apertura </span>
+                        <span> <input type="time" th:field="${locale.orarioApertura}"> </span>
                     </div>
                     <span> Orario chiusura </span>
-                    <span> <input type = "datetime-local" th:field = "${locale.orarioChiusura}"> </span>
-                    </div>
-                    <div>
-                    <span>Localita</span>
-                        <span><select th:field = "${locale.localita}" >
+                    <span> <input type="time" th:field="${locale.orarioChiusura}"> </span>
+            </div>
+            <div>
+                <span>Localita</span>
+                <span><select th:field="${locale.localitaNegozio}">
                             <option th:each="loc : ${localita}" th:text="${loc.nome}" th:value="${loc.id}"></option>
                         </select> </span>
-                    </div>
-                    
-                    <span> <input type="submit" value="Aggiungi Negozio"> </span>
-                </form>
             </div>
 
-            <div th:if="${vaccinoDaAggiornare}" class="login-box">
-                <form th:action="@{/aggiornaVaccino}" method="POST" th:object="${vaccinoDaAggiornare}">
-                    <div>Tipologia
-                        <select name="Tipologia" th:field="*{tipologia}">
-                            <option value="Pfitzer">Pfitzer</option>
-                            <option value="Astrazeneca">Astrazeneca</option>
-                            <option value="Moderna">Moderna</option>
-                            <option value="J&J">J&J</option>
-                        </select>
-                    </div>
-                    <span>Data prima dose:</span>
-                    <span><input type="date" th:field="${vaccinoDaAggiornare.dataPrimaDose}" required/></span>
-                    <span>Data seconda dose:</span>
-                    <span><input type="date" th:field="${vaccinoDaAggiornare.dataSecondaDose}"></span>
-                    <span> <input type="submit" value="Aggiungi"> </span>
-                </form>
-            </div>
-
-
-            <div th:if="${vaccinoInserito}" class="login-box">
-                <div><h2>Hai già inserito il tuo vaccino!</h2></div>
-                <div>Ecco i tuoi dati:</div>
-                <div th:text="'Tipologia: '+${vaccinoInserito.tipologia}"></div>
-                <div th:text="'Data prima dose: '+${vaccinoInserito.dataPrimaDose}"></div>
-                <div th:if="${vaccinoInserito.dataSecondaDose != null}"
-                     th:text="'Data seconda dose: '+${vaccinoInserito.dataSecondaDose}"></div>
-                <div><a th:href="@{/aggiornaVaccino}">Aggiorna dati!</a></div>
-            </div>
+            <span> <input type="submit" value="Aggiungi Negozio"> </span>
+            </form>
         </div>
     </div>
 </div>

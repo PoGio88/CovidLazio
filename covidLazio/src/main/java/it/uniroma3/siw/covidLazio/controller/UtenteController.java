@@ -43,7 +43,7 @@ public class UtenteController {
 
     @RequestMapping(value = {"/", "index"}, method = RequestMethod.GET)
     public String index(Model model) {
-    	comuniService.caricaComuni();
+    	//comuniService.caricaComuni();
         return "index.html";
     }
 
@@ -91,13 +91,14 @@ public class UtenteController {
     }
     
     @RequestMapping(value = {"/aggiungiNegozio"}, method = RequestMethod.POST)
-    public String aggiungiNegozio(@ModelAttribute("locale") Locale negozio, Model model) {
+    public String aggiungiNegozio(@ModelAttribute("locale") Negozio negozio, Model model) {
 		Utente utenteCorrente = getUtenteCorrente();
     	utenteCorrente.setLocale(negozio);
     	UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-		credentials.setRole(DIPENDENTE_ROLE);
-    	this.utenteService.aggiornaUtente(utenteCorrente);
+		this.utenteService.aggiornaUtente(utenteCorrente);
+		credentialsService.setDipendenteCredentials(credentials, negozio.getId());
+		this.utenteService.aggiornaUtente(utenteCorrente);
     	return "index.html";
     }
 

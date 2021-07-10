@@ -50,7 +50,7 @@
       <div class = "negozio-box" > 
       <div> Gestisci il tuo negozio! </div>
       <div>
-      <a th:if ="${utente.locale != null}" th:href = "'/negozio/'+${utente.locale.id}" th:text ="${utente.locale.nome}"> </a> 
+      <a th:if ="${utente.locale != null}" th:href = "@{'/dipendente/'+${utente.locale.id}}" th:text ="${utente.locale.nome}"> </a>
       <span th:unless ="${utente.locale != null}"> Non gestisci nessun negozio. <a th:href ="@{/aggiungiNegozio}">Clicca qui per aggiungerne uno </a> 
       </span>
       </div>

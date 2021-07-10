@@ -22,6 +22,21 @@
         </ul> 
     </div>
     </header>
+
+<header th:fragment=menuNegozio>
+    <div class="sidebar">
+        <h2>Covid Lazio</h2>
+        <ul>
+            <li><a th:href="@{/default}"><i class="fas fa-home"></i>Home</a></li>
+            <li><a th:href="'/dipendente/'+${locale.id}+'/aggiungiProdotto'" ><i class="fas fa-user"></i>Aggiungi Prodotto</a></li>
+            <li><a href="#"><i class="fas fa-address-card"></i>Modifica Prodotto</a></li>
+            <li><a th:href="@{/login}"><i class="fas fa-project-diagram"></i>Home gestisci negozio</a></li>
+            <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
+            <li><a href="#"><i class="fas fa-address-book"></i>Contatti</a></li>
+            <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
+        </ul>
+    </div>
+</header>
     
   <header th:fragment=menuUtente>
   <div class="sidebarUtente">

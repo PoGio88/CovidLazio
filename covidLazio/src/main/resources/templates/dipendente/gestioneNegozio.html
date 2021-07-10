@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+</head>
+<body>
+
+<div class = "all">
+
+  <header th:replace="fragments/base.html :: menuNegozio">
+  </header>
+
+
+  <div class="main_content">
+    <div class="header">Gestisci negozio</div>
+    <div class="info">
+      <div class="login-box">
+      <div>
+        <span>Nome </span>
+        <span th:text="${locale.nome}"></span>
+      </div>
+        <div>
+          <span>Localita </span>
+          <span th:text="${locale.localitaNegozio.nome} + ' in provincia di ' + ${locale.localitaNegozio.provincia}"></span>
+        </div>
+        <div>
+          <span>Giorno chiusura </span>
+          <span th:text="${locale.giornoChiusura}"></span>
+        </div>
+        <div>
+          <span>Orario apertura </span>
+          <span th:text="${locale.orarioApertura}"></span>
+        </div>
+        <div>
+          <span>Orario chiusura </span>
+          <span th:text="${locale.orarioChiusura}"></span>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<footer th:replace="fragments/base.html :: fondo">
+</footer>
+
+</body>
+</html>

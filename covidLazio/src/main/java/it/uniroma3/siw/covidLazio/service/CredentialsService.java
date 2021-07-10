@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import it.uniroma3.siw.covidLazio.model.Credentials;
 import it.uniroma3.siw.covidLazio.repository.CredentialsRepository;
 
+import static it.uniroma3.siw.covidLazio.model.Credentials.DIPENDENTE_ROLE;
 
 
 @Service
@@ -39,5 +40,10 @@ public class CredentialsService {
         credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
         return this.credentialsRepository.save(credentials);
     }
+
+	public void setDipendenteCredentials(Credentials credentials,Long id) {
+		String cred = DIPENDENTE_ROLE + "/" + id;
+		credentials.setRole(cred);
+	}
 }
 	

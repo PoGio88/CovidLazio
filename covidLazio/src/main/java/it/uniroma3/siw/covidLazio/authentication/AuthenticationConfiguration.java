@@ -2,6 +2,8 @@ package it.uniroma3.siw.covidLazio.authentication;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static it.uniroma3.siw.covidLazio.model.Credentials.DIPENDENTE_ROLE;
 import static it.uniroma3.siw.covidLazio.model.Credentials.UTENTE_ROLE;
 
 import org.springframework.context.annotation.Bean;
@@ -11,6 +13,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -36,8 +41,10 @@ public class AuthenticationConfiguration extends WebSecurityConfigurerAdapter {
                 // chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login e register 
                 .antMatchers(HttpMethod.POST, "/login", "/register").permitAll()
                 // solo gli utenti autenticati con ruolo ADMIN possono accedere a risorse con path /admin/**
-                .antMatchers(HttpMethod.GET, "/utente/**").hasAnyAuthority(UTENTE_ROLE)
-                .antMatchers(HttpMethod.POST, "/utente/**").hasAnyAuthority(UTENTE_ROLE)
+                .antMatchers(HttpMethod.GET, "/aggiungiNegozio").hasAuthority(UTENTE_ROLE)
+                .antMatchers(HttpMethod.POST, "/aggiungiNegozio").hasAuthority(UTENTE_ROLE)
+                .antMatchers(HttpMethod.GET, "/dipendente/{id}").access("hasAnyAuthority('DIPENDENTE'.concat('/').concat(#id))")
+                .antMatchers(HttpMethod.POST, "/dipendente/{id}").access("hasAnyAuthority('DIPENDENTE'.concat('/').concat(#id))")
                 
                 // tutti gli utenti autenticati possono accere alle pagine rimanenti 
                 .anyRequest().authenticated()
@@ -76,4 +83,8 @@ public class AuthenticationConfiguration extends WebSecurityConfigurerAdapter {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
+
+
 }

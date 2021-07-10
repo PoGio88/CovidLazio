@@ -1,9 +1,11 @@
 package it.uniroma3.siw.covidLazio.model;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Data
@@ -19,16 +21,18 @@ public abstract class Locale {
 
     private String giornoChiusura;
 
-    private LocalDateTime orarioApertura;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime orarioApertura;
 
-    private LocalDateTime orarioChiusura;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime orarioChiusura;
 
-    private URI sitoWeb;
+    private String sitoWeb;
     
     @ManyToOne
     private Localita localitaNegozio;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Prodotto> prodotti;
 
 }
