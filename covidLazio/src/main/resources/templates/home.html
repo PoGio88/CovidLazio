@@ -4,62 +4,54 @@
 </head>
 <body>
 
-<div class = "all">
+<div class="all">
 
-  <header th:replace="fragments/base.html :: menuUtente">
-  </header>
+    <header th:replace="fragments/base.html :: menuUtente(utente = ${utente})">
+    </header>
 
 
-  <div class="main_content">
-    <div class="header">Area personale </div>
-    <div class="info">
-     <div class="login-box">
-    <img th:src="@{images/avatar.png}" class="avatar">
-    <div>
-          <span>Nome e Cognome</span>
-          <span th:text ="|${utente.nome} ${utente.cognome}">Nome e cognome utente</span>
+    <div class="main_content">
+        <div class="header">Area personale</div>
+        <div class="info">
+            <div class="profilo-box">
+                <img th:src="@{images/avatar.png}" class="avatar">
+                <div>
+                    <span>Nome e Cognome</span>
+                    <span style="font-weight: bold" th:text="|${utente.nome} ${utente.cognome}|">Nome e cognome utente</span>
+                </div>
+                <div>
+                    <span>Data di nascita</span>
+                    <span style="font-weight: bold" th:text="${#temporals.format(utente.dataNascita, 'dd-MM-yyyy')}">Data nascita utente</span>
+                </div>
+                <div>
+                    <span>Localita</span>
+                    <span style="font-weight: bold" th:text="${utente.localita.nome}">Localita utente</span>
+                </div>
+                <div>
+                    <span>Provincia</span>
+                    <span style="font-weight: bold" th:text="${utente.localita.provincia}">Provincia localita utente</span>
+                </div>
+                <div th:if="${utente.vaccino != null}">
+                    <div>
+                        <span>Tipologia Vaccino </span>
+                        <span style="font-weight: bold" th:text="${utente.vaccino.tipologia}">Nome vaccino </span>
+                    </div>
+                    <div th:if="${utente.vaccino.dataPrimaDose != null}">
+                        <span>Data prima dose</span>
+                        <span style="font-weight: bold" th:text="${#temporals.format(utente.vaccino.dataPrimaDose, 'dd-MM-yyyy')}">Data prima dose </span>
+                    </div>
+                    <div th:if="${utente.vaccino.dataSecondaDose != null}">
+                        <span>Data seconda dose </span>
+                        <span style="font-weight: bold" th:text="${#temporals.format(utente.vaccino.dataSecondaDose, 'dd-MM-yyyy')}">Data seconda dose </span>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
     </div>
-    <div>
-          <span>Data di nascita</span>
-          <span th:text ="${utente.dataNascita}">Data nascita utente</span>
-    </div>
-      <div>
-          <span>Localita</span>
-          <span th:text ="${utente.localita.nome}">Localita utente</span>
-      </div>
-      <div>
-          <span>Provincia</span>
-          <span th:text ="${utente.localita.provincia}">Provincia localita utente</span>
-      </div>
-      <div>
-          <span>Vaccino </span>
-          <span th:if="${utente.vaccino != null}" th:text ="${utente.vaccino.tipologia}">Nome vaccino 
-          
-          <div> 
-          <span>Data prima dose</span> 
-         <span th:if ="${utente.vaccino.dataPrimaDose != null}" th:text="${utente.vaccino.dataPrimaDose}"> Data prima dose </span>
-          </div>
-          <div> 
-          <span>Data seconda dose </span> 
-          <span th:if ="${utente.vaccino.dataSecondaDose != null}" th:text="${utente.vaccino.dataSecondaDose}">Data seconda dose </span>
-          </div>  
-          </span>
-          </div> 
-      </div>
-      
-      <div class = "negozio-box" > 
-      <div> Gestisci il tuo negozio! </div>
-      <div>
-      <a th:if ="${utente.locale != null}" th:href = "@{'/dipendente/'+${utente.locale.id}}" th:text ="${utente.locale.nome}"> </a>
-      <span th:unless ="${utente.locale != null}"> Non gestisci nessun negozio. <a th:href ="@{/aggiungiNegozio}">Clicca qui per aggiungerne uno </a> 
-      </span>
-      </div>
-     
-      </div>
-      
-    </div>
-    </div>
-  </div>
+</div>
 
 
 <footer th:replace="fragments/base.html :: fondo">

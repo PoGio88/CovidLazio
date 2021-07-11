@@ -1,6 +1,7 @@
 package it.uniroma3.siw.covidLazio.controller;
 
 
+import it.uniroma3.siw.covidLazio.helper.RicercaHelper;
 import it.uniroma3.siw.covidLazio.model.Credentials;
 import it.uniroma3.siw.covidLazio.model.Locale;
 import it.uniroma3.siw.covidLazio.model.Negozio;
@@ -53,6 +54,7 @@ public class UtenteController {
     	if(utenteCorrente.getVaccino() == null) {
         model.addAttribute("vaccino",new Vaccino());
     	} else model.addAttribute("vaccinoInserito", utenteCorrente.getVaccino());
+    	model.addAttribute("utente",utenteCorrente);
         return "utente/vaccinoForm.html";
     }
     
@@ -61,12 +63,14 @@ public class UtenteController {
 		Utente utenteCorrente = getUtenteCorrente();
     	utenteCorrente.setVaccino(vaccino);
     	this.utenteService.aggiornaUtente(utenteCorrente);
-    	return "index.html";
+		model.addAttribute("utente",utenteCorrente);
+    	return "home.html";
     }
 
     @RequestMapping(value = "/aggiornaVaccino", method = RequestMethod.GET)
     public String aggiornaVaccino(Model model) {
 		Utente utenteCorrente = getUtenteCorrente();
+		model.addAttribute(utenteCorrente);
         model.addAttribute("vaccinoDaAggiornare", utenteCorrente.getVaccino());
         return "utente/vaccinoForm.html";
     }
@@ -80,17 +84,19 @@ public class UtenteController {
 		vaccinoAggiornato.setDataSecondaDose(vaccino.getDataSecondaDose());
 		utenteCorrente.setVaccino(vaccinoAggiornato);
 		this.utenteService.aggiornaUtente(utenteCorrente);
-		return "index.html";
+		model.addAttribute(utenteCorrente);
+		return "home.html";
 	}
 	
 	@RequestMapping(value = "/aggiungiNegozio", method = RequestMethod.GET)
     public String aggiungiNegozio(Model model) {
+    	model.addAttribute("utente",getUtenteCorrente());
         model.addAttribute("locale",new Negozio());
         model.addAttribute("localita", comuniService.tutteLeLocalita());
         return "utente/negozioForm.html";
     }
     
-    @RequestMapping(value = {"/aggiungiNegozio"}, method = RequestMethod.POST)
+    @RequestMapping(value = "/aggiungiNegozio", method = RequestMethod.POST)
     public String aggiungiNegozio(@ModelAttribute("locale") Negozio negozio, Model model) {
 		Utente utenteCorrente = getUtenteCorrente();
     	utenteCorrente.setLocale(negozio);
@@ -99,8 +105,26 @@ public class UtenteController {
 		this.utenteService.aggiornaUtente(utenteCorrente);
 		credentialsService.setDipendenteCredentials(credentials, negozio.getId());
 		this.utenteService.aggiornaUtente(utenteCorrente);
-    	return "index.html";
+		model.addAttribute(utenteCorrente);
+    	return "home.html";
     }
+
+    @RequestMapping(value = "/visualizzaProdotti", method = RequestMethod.GET)
+	public String visualizzaProdotti(Model model) {
+		model.addAttribute("utente",getUtenteCorrente());
+    	model.addAttribute("prodotti",utenteService.tuttiIProdotti());
+    	model.addAttribute("helper",new RicercaHelper());
+    	return "utente/visualizzaProdotti.html";
+	}
+
+	@RequestMapping(value = "/visualizzaProdotti", method = RequestMethod.POST)
+	public String visualizzaProdotti(@ModelAttribute("helper") RicercaHelper helper,Model model) {
+    	model.addAttribute("prodotti",utenteService.prodottiPerNome(helper.getNome()));
+    	model.addAttribute("utente",getUtenteCorrente());
+    	System.out.println("STAMPA IL NOME" + helper.getNome());
+		model.addAttribute("helper",new RicercaHelper());
+		return "utente/visualizzaProdotti.html";
+	}
 
 	private Utente getUtenteCorrente() {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();

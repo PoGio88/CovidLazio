@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+</head>
+<body>
+
+<div class="all">
+
+    <header th:replace="fragments/base.html :: menuNegozio">
+    </header>
+
+
+    <div class="main_content">
+        <div class="header">Aggiungi un prodotto</div>
+        <div class="info">
+            <div class="prodotti-box">
+                <form th:action="@{'/dipendente/'+${locale.id}+'/modificaProdotti'}" method="POST"
+                      th:object="${locale}" th:name="locale">
+                    <div class="prodotti-da-modificare" th:each="prodotto,iter : *{prodotti}">
+                          <span th:text="*{prodotti[__${iter.index}__].nome}"></span>
+                        <span th:text="Prezzo"/></span>
+                        <input type="number" th:field="*{prodotti[__${iter.index}__].prezzo}"/>
+                        <span th:text="Disponibile"/></span>
+                        <input type="checkbox" th:field="*{prodotti[__${iter.index}__].disponibile}"/>
+                    </div>
+
+
+                    <span> <input type="submit" value="Salva modifiche"> </span>
+                    <span> <input type="submit" value="Annulla"> </span>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/base.html :: fondo">
+</footer>
+
+</body>
+</html>

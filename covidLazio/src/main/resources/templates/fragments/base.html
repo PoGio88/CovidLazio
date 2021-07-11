@@ -1,35 +1,38 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="headerfiles(title)">
-  <meta charset="UTF-8"/>
-  <link th:href="@{/css/style.css}" rel="stylesheet">
-  <title th:text="${title}"></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9aba106545.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    <title th:text="${title}"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
 <header th:fragment=menu>
-  <div class="sidebar">
+    <div class="sidebar">
         <h2>Covid Lazio</h2>
         <ul>
             <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
-            <li><a th:href="@{/register}" ><i class="fas fa-user"></i>Registrati</a></li>
-            <li><a href="#"><i class="fas fa-address-card"></i>Su di noi</a></li>
-            <li><a th:href="@{/login}"><i class="fas fa-project-diagram"></i>Login</a></li>
-            <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
-            <li><a href="#"><i class="fas fa-address-book"></i>Contatti</a></li>
-            <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
-        </ul> 
+            <li><a th:href="@{/register}"><i class="fas fa-user"></i>Registrati</a></li>
+            <li><a th:href="@{/login}"><i class="fas fa-address-card"></i>Login</a></li>
+            <li><a href="#"><i class="fas fa-users"></i>Su di noi</a></li>
+        </ul>
     </div>
-    </header>
+</header>
 
 <header th:fragment=menuNegozio>
     <div class="sidebar">
         <h2>Covid Lazio</h2>
         <ul>
             <li><a th:href="@{/default}"><i class="fas fa-home"></i>Home</a></li>
-            <li><a th:href="'/dipendente/'+${locale.id}+'/aggiungiProdotto'" ><i class="fas fa-user"></i>Aggiungi Prodotto</a></li>
-            <li><a href="#"><i class="fas fa-address-card"></i>Modifica Prodotto</a></li>
+            <li><a th:href="'/dipendente/'+${locale.id}+'/aggiungiProdotto'"><i class="fas fa-user"></i>Aggiungi
+                Prodotto</a></li>
+            <li><a th:href="'/dipendente/'+${locale.id}+'/modificaProdotti'"><i class="fas fa-address-card"></i>Modifica
+                Prodotti</a></li>
             <li><a th:href="@{/login}"><i class="fas fa-project-diagram"></i>Home gestisci negozio</a></li>
             <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
             <li><a href="#"><i class="fas fa-address-book"></i>Contatti</a></li>
@@ -37,25 +40,27 @@
         </ul>
     </div>
 </header>
-    
-  <header th:fragment=menuUtente>
-  <div class="sidebarUtente">
+
+<header th:fragment=menuUtente(utente)>
+    <div class="sidebarUtente">
         <h2>Covid Lazio</h2>
         <ul>
-            <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
-            <li><a th:href="@{/logout}"><i class="fas fa-project-diagram"></i>Logout</a></li>
-            <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
-            <li><a th:href="@{/aggiungiVaccino}"><i class="fas fa-address-book"></i>Vaccino</a></li>
-            <li><a href="#"><i class="fas fa-address-book"></i>Contatti</a></li>
-            <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
-        </ul> 
+            <li><a th:href="@{/default}"><i class="fas fa-home"></i>Home</a></li>
+            <li><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+            <li><a th:href="@{/visualizzaProdotti}"><i class="fas fa-pump-medical"></i>Prodotti</a></li>
+            <li><a th:href="@{/aggiungiVaccino}"><i class="fas fa-syringe"></i>Vaccino</a></li>
+            <li th:if="${utente.locale}"><a th:href="@{'/dipendente/'+${utente.locale.id}}"
+                                            th:text="${utente.locale.nome}"><i class="fas fa-store"></i>Negozio</a></li>
+            <li th:unless="${utente.locale}"><a th:href="@{/aggiungiNegozio}"><i class="fas fa-store"></i></i>Aggiungi
+                Negozio</a></li>
+        </ul>
     </div>
-    </header>
+</header>
 
-<footer th:fragment="fondo" class = "info">
-  <ul id="fondo-testo">
-    <li> realizzato da Daniele Pica e Giorgio Poggini</li>
-  </ul>
+<footer th:fragment="fondo" class="info">
+    <ul id="fondo-testo">
+        <li> realizzato da Daniele Pica e Giorgio Poggini</li>
+    </ul>
 </footer>
 
 

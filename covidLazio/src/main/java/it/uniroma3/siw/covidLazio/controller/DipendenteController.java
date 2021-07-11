@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @Controller
 public class DipendenteController {
 
@@ -22,9 +24,9 @@ public class DipendenteController {
     public String gestisciNegozio(@PathVariable("id") Long id, Model model) {
         Locale locale = dipendenteService.localePerId(id);
         model.addAttribute("locale",locale);
-        model.addAttribute("prodotti", dipendenteService.prodottiPerLocale((Negozio) locale));
-        System.out.println(dipendenteService.prodottiPerLocale((Negozio) locale).size());
-        System.out.println(dipendenteService.prodottiPerLocale((Negozio) locale).isEmpty());
+        model.addAttribute("prodotti", locale.getProdotti());
+        //System.out.println(dipendenteService.prodottiPerLocale(locale).size());
+        //System.out.println(dipendenteService.prodottiPerLocale(locale).isEmpty());
 
         return "dipendente/gestioneNegozio.html";
     }
@@ -41,9 +43,32 @@ public class DipendenteController {
     public String aggiungiProdotto(@PathVariable("id") Long id,@ModelAttribute("prodotto") Prodotto prodotto, Model model) {
         Locale locale = dipendenteService.localePerId(id);
         locale.getProdotti().add(prodotto);
-        prodotto.setNegozio((Negozio) locale);
+        prodotto.setLocale(locale);
         dipendenteService.aggiornaLocale(locale);
         model.addAttribute("locale", locale);
+        model.addAttribute("prodotti",locale.getProdotti());
+        return "dipendente/gestioneNegozio.html";
+    }
+
+    @RequestMapping(value = "/dipendente/{id}/modificaProdotti",method = RequestMethod.GET)
+    public String modificaProdotti(@PathVariable("id") Long id, Model model) {
+        Locale locale = dipendenteService.localePerId(id);
+        model.addAttribute("prodotti",locale.getProdotti());
+        model.addAttribute("locale",locale);
+        return "dipendente/modificaProdotti.html";
+    }
+
+    @RequestMapping(value = "/dipendente/{id}/modificaProdotti",method = RequestMethod.POST)
+    public String modificaProdotti(@PathVariable("id") Long id, @ModelAttribute(value = "locale") Negozio negozio,  Model model) {
+        Locale locale = dipendenteService.localePerId(id);
+        List<Prodotto> prodotti = locale.getProdotti();
+        for(int i=0;i<prodotti.size();i++) {
+            prodotti.get(i).setPrezzo(negozio.getProdotti().get(i).getPrezzo());
+            prodotti.get(i).setDisponibile(negozio.getProdotti().get(i).isDisponibile());
+        }
+        dipendenteService.aggiornaLocale(locale);
+        model.addAttribute("prodotti",locale.getProdotti());
+        model.addAttribute("locale",locale);
         return "dipendente/gestioneNegozio.html";
     }
 

@@ -4,60 +4,57 @@
 </head>
 <body>
 
-<div class = "all">
+<div class="all">
 
-  <header th:replace="fragments/base.html :: menuNegozio">
-  </header>
-
-
-  <div class="main_content">
-    <div class="header">Gestisci negozio</div>
-    <div class="info">
-      <div class="login-box">
-      <div>
-        <span>Nome </span>
-        <span th:text="${locale.nome}"></span>
-      </div>
-        <div>
-          <span>Localita </span>
-          <span th:text="${locale.localitaNegozio.nome} + ' in provincia di ' + ${locale.localitaNegozio.provincia}"></span>
-        </div>
-        <div>
-          <span>Giorno chiusura </span>
-          <span th:text="${locale.giornoChiusura}"></span>
-        </div>
-        <div>
-          <span>Orario apertura </span>
-          <span th:text="${locale.orarioApertura}"></span>
-        </div>
-        <div>
-          <span>Orario chiusura </span>
-          <span th:text="${locale.orarioChiusura}"></span>
-        </div>
-      </div>
-      
-      <div class ="catalogo-prodotti-box"> 
-        <div> Catalogo prodotti in negozio </div>
-        <div th:if="${!prodotti.isEmpty()}" th:each ="prod : ${prodotti}">
-         <div th:text ="${prod.nome}"> </div>
-         <div th:if ="${prod.disponibile}">Disponibile </div>
-         <div th:unless ="${prod.disponibile}">Non disponibile </div>
-         </div>
-        </div>
-        <div th:unless="${!prodotti.isEmpty()}"> 
-        <div> Non hai aggiunto nessun prodotto al negozio </div>
-      </div>
-      
+    <header th:replace="fragments/base.html :: menuNegozio">
+    </header>
 
 
+    <div class="main_content">
+        <div class="header">Gestisci negozio</div>
+        <div class="info">
+            <div class="login-box">
+                <div>
+                    <span>Nome </span>
+                    <span th:text="${locale.nome}"></span>
+                </div>
+                <div>
+                    <span>Localita </span>
+                    <span th:text="${locale.localitaNegozio.nome} + ' in provincia di ' + ${locale.localitaNegozio.provincia}"></span>
+                </div>
+                <div>
+                    <span>Giorno chiusura </span>
+                    <span th:text="${locale.giornoChiusura}"></span>
+                </div>
+                <div>
+                    <span>Orario apertura </span>
+                    <span th:text="${locale.orarioApertura}"></span>
+                </div>
+                <div>
+                    <span>Orario chiusura </span>
+                    <span th:text="${locale.orarioChiusura}"></span>
+                </div>
+            </div>
+
+            <div class="catalogo-prodotti-box">
+                <div> Catalogo prodotti in negozio</div>
+                <div th:if="${!prodotti.isEmpty()}">
+                    <div th:each="prod : ${prodotti}">
+                        <div th:text="${prod.nome}"></div>
+                        <div th:if="${prod.disponibile}">Disponibile</div>
+                        <div th:unless="${prod.disponibile}">Non disponibile</div>
+                    </div>
+                </div>
+                <div th:unless="${!prodotti.isEmpty()}">
+                    <div> Non hai aggiunto nessun prodotto al negozio</div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
-
-
-<footer th:replace="fragments/base.html :: fondo">
-</footer>
+    <footer th:replace="fragments/base.html :: fondo">
+    </footer>
 
 </body>
 </html>

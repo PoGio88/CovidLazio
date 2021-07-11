@@ -31,7 +31,9 @@ public class DipendenteService {
     public Locale aggiornaLocale(Locale locale) { return localeRepository.save(locale); }
     
     @Transactional
-    public List<Prodotto> prodottiPerLocale(Negozio locale){
-    	return this.prodottoRepositoy.findByNegozio(locale);
+    public List<Prodotto> prodottiPerLocale(Locale locale){
+    	return this.prodottoRepositoy.findByLocale(locale);
     }
+
+
 }

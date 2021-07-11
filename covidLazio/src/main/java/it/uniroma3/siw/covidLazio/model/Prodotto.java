@@ -19,6 +19,6 @@ public class Prodotto {
     private boolean disponibile;
     
     @ManyToOne
-    private Negozio negozio;
+    private Locale locale;
 
 }

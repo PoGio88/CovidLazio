@@ -10,7 +10,8 @@ import it.uniroma3.siw.covidLazio.model.Prodotto;
 
 public interface ProdottoRepository extends CrudRepository<Prodotto,Long> {
 	
-	public List<Prodotto> findByNegozio(Negozio locale);
+	public List<Prodotto> findByLocale(Locale locale);
 	//Se qui metto Locale mi da errore, da far vedere a giorgio
 
+	public List<Prodotto> findByNomeContaining(String nome);
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+</head>
+<body>
+
+<div class="all">
+
+    <header th:replace="fragments/base.html :: menuUtente(utente = ${utente})">
+    </header>
+
+
+    <div class="main_content">
+        <div class="header">Area personale</div>
+        <div class="info">
+            <div class="prodotti-box">
+                <div class="prodotti-da-visualizzare" th:each="prodotto: ${prodotti}">
+                    <span th:text="${prodotto.nome}"></span>
+                    <span th:text="Prezzo"></span>
+                    <span th:text="'€' + ${prodotto.prezzo}"></span>
+                    <i th:if="${prodotto.disponibile}" class="fas fa-circle" id="pallino-disponibile"></i>
+                    <i th:unless="${prodotto.disponibile}" class="fas fa-circle" id="pallino-non-disponibile"></i>
+                    <span th:text="'presso '+ ${prodotto.locale.nome} + ' ' + ${prodotto.locale.localitaNegozio.nome} + ' ' + ${prodotto.locale.localitaNegozio.CAP}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <form method="post" th:action="@{/visualizzaProdotti}" th:object="${helper}">
+            <label>NOME</label>
+            <input type="text" th:field="${helper.nome}">
+            <input type="submit">
+        </form>
+    </div>
+</div>
+
+
+<footer th:replace="fragments/base.html :: fondo">
+</footer>
+
+</body>
+</html>
