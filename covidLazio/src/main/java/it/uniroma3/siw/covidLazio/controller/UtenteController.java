@@ -9,9 +9,16 @@ import it.uniroma3.siw.covidLazio.model.Utente;
 import it.uniroma3.siw.covidLazio.model.Vaccino;
 
 
+
 import it.uniroma3.siw.covidLazio.repository.LocalitaRepository;
 import it.uniroma3.siw.covidLazio.service.ComuniService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -23,6 +30,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.uniroma3.siw.covidLazio.service.CredentialsService;
 import it.uniroma3.siw.covidLazio.service.UtenteService;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static it.uniroma3.siw.covidLazio.model.Credentials.DIPENDENTE_ROLE;
 
 
@@ -105,7 +116,8 @@ public class UtenteController {
 		this.utenteService.aggiornaUtente(utenteCorrente);
 		credentialsService.setDipendenteCredentials(credentials, negozio.getId());
 		this.utenteService.aggiornaUtente(utenteCorrente);
-		model.addAttribute(utenteCorrente);
+		this.update(userDetails);
+		model.addAttribute("utente",utenteCorrente);
     	return "home.html";
     }
 
@@ -126,11 +138,18 @@ public class UtenteController {
 		return "utente/visualizzaProdotti.html";
 	}
 
-	private Utente getUtenteCorrente() {
+	public Utente getUtenteCorrente() {
 		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 		return  this.utenteService.utentePerId(credentials.getUtente().getId());
 	}
-    
 
+	private void update(UserDetails userDetails) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userRole = credentialsService.getCredentials(userDetails.getUsername()).getRole();
+		List<GrantedAuthority> actualAuthorities = new ArrayList<>();
+		actualAuthorities.add(new SimpleGrantedAuthority(userRole));
+		Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), actualAuthorities);
+		SecurityContextHolder.getContext().setAuthentication(newAuth);
+	}
 }

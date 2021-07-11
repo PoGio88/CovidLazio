@@ -1,10 +1,11 @@
 package it.uniroma3.siw.covidLazio.controller;
 
-import it.uniroma3.siw.covidLazio.model.Locale;
-import it.uniroma3.siw.covidLazio.model.Negozio;
-import it.uniroma3.siw.covidLazio.model.Prodotto;
+import it.uniroma3.siw.covidLazio.model.*;
 import it.uniroma3.siw.covidLazio.service.DipendenteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +21,11 @@ public class DipendenteController {
     @Autowired
     private DipendenteService dipendenteService;
 
+    @Autowired
+    private UtenteController utenteController;
+
+
+
     @RequestMapping(value = "/dipendente/{id}",method = RequestMethod.GET)
     public String gestisciNegozio(@PathVariable("id") Long id, Model model) {
         Locale locale = dipendenteService.localePerId(id);
@@ -27,7 +33,6 @@ public class DipendenteController {
         model.addAttribute("prodotti", locale.getProdotti());
         //System.out.println(dipendenteService.prodottiPerLocale(locale).size());
         //System.out.println(dipendenteService.prodottiPerLocale(locale).isEmpty());
-
         return "dipendente/gestioneNegozio.html";
     }
 

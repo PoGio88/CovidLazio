@@ -11,12 +11,17 @@
 
 
     <div class="main_content">
-        <div class="header">Area personale</div>
+        <div class="header" id="ricerca-prodotti">
+            <span>Area personale</span>
+            <form method="post" th:action="@{/visualizzaProdotti}" th:object="${helper}">
+                <input type="text" placeholder="Ricerca per nome" th:field="${helper.nome}">
+                <input type="submit" value="cerca"/>
+            </form>
+        </div>
         <div class="info">
             <div class="prodotti-box">
                 <div class="prodotti-da-visualizzare" th:each="prodotto: ${prodotti}">
-                    <span th:text="${prodotto.nome}"></span>
-                    <span th:text="Prezzo"></span>
+                    <span th:text="${prodotto.nome}" style="font-weight: bold"></span>
                     <span th:text="'€' + ${prodotto.prezzo}"></span>
                     <i th:if="${prodotto.disponibile}" class="fas fa-circle" id="pallino-disponibile"></i>
                     <i th:unless="${prodotto.disponibile}" class="fas fa-circle" id="pallino-non-disponibile"></i>
@@ -24,15 +29,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-
-    <div>
-        <form method="post" th:action="@{/visualizzaProdotti}" th:object="${helper}">
-            <label>NOME</label>
-            <input type="text" th:field="${helper.nome}">
-            <input type="submit">
-        </form>
     </div>
 </div>
 

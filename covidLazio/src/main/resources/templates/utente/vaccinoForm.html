@@ -53,10 +53,10 @@
             <div th:if="${vaccinoInserito}" class="login-box">
                 <div><h2>Hai già inserito il tuo vaccino!</h2></div>
                 <div>Ecco i tuoi dati:</div>
-                <div th:text="'Tipologia: '+${vaccinoInserito.tipologia}"></div>
-                <div th:text="'Data prima dose: '+${vaccinoInserito.dataPrimaDose}"></div>
+                <div th:text="'Tipologia: '+${vaccinoInserito.tipologia}" style="font-weight: bold"></div>
+                <div th:text="'Data prima dose: '+${#temporals.format(vaccinoInserito.dataPrimaDose, 'dd-MM-yyyy')}" style="font-weight: bold"></div>
                 <div th:if="${vaccinoInserito.dataSecondaDose != null}"
-                     th:text="'Data seconda dose: '+${vaccinoInserito.dataSecondaDose}"></div>
+                     th:text="'Data seconda dose: '+${#temporals.format(vaccinoInserito.dataSecondaDose, 'dd-MM-yyyy')}" style="font-weight: bold"></div>
                 <div><a th:href="@{/aggiornaVaccino}">Aggiorna dati!</a></div>
             </div>
         </div>

@@ -29,28 +29,22 @@
         <h2>Covid Lazio</h2>
         <ul>
             <li><a th:href="@{/default}"><i class="fas fa-home"></i>Home</a></li>
-            <li><a th:href="'/dipendente/'+${locale.id}+'/aggiungiProdotto'"><i class="fas fa-user"></i>Aggiungi
-                Prodotto</a></li>
-            <li><a th:href="'/dipendente/'+${locale.id}+'/modificaProdotti'"><i class="fas fa-address-card"></i>Modifica
-                Prodotti</a></li>
-            <li><a th:href="@{/login}"><i class="fas fa-project-diagram"></i>Home gestisci negozio</a></li>
-            <li><a href="#"><i class="fas fa-blog"></i>Blogs</a></li>
-            <li><a href="#"><i class="fas fa-address-book"></i>Contatti</a></li>
-            <li><a href="#"><i class="fas fa-map-pin"></i>Map</a></li>
+            <li><a th:href="'/dipendente/'+${locale.id}+'/aggiungiProdotto'"><i class="fas fa-plus"></i>Aggiungi Prodotto</a></li>
+            <li><a th:href="'/dipendente/'+${locale.id}+'/modificaProdotti'"><i class="fas fa-pump-medical"></i>Modifica Prodotti</a></li>
+            <li><a th:href="@{'/dipendente/'+${locale.id}}"><i class="fas fa-store"></i>Gestisci negozio</a></li>
         </ul>
     </div>
 </header>
 
 <header th:fragment=menuUtente(utente)>
-    <div class="sidebarUtente">
+    <div class="sidebar">
         <h2>Covid Lazio</h2>
         <ul>
             <li><a th:href="@{/default}"><i class="fas fa-home"></i>Home</a></li>
             <li><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
             <li><a th:href="@{/visualizzaProdotti}"><i class="fas fa-pump-medical"></i>Prodotti</a></li>
             <li><a th:href="@{/aggiungiVaccino}"><i class="fas fa-syringe"></i>Vaccino</a></li>
-            <li th:if="${utente.locale}"><a th:href="@{'/dipendente/'+${utente.locale.id}}"
-                                            th:text="${utente.locale.nome}"><i class="fas fa-store"></i>Negozio</a></li>
+            <li th:if="${utente.locale}"><a th:href="@{'/dipendente/'+${utente.locale.id}}" th:text="${utente.locale.nome}"><i class="fas fa-store"></i>Negozio</a></li>
             <li th:unless="${utente.locale}"><a th:href="@{/aggiungiNegozio}"><i class="fas fa-store"></i></i>Aggiungi
                 Negozio</a></li>
         </ul>
