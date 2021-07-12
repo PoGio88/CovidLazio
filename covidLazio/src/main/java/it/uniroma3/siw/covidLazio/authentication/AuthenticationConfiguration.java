@@ -3,7 +3,6 @@ package it.uniroma3.siw.covidLazio.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static it.uniroma3.siw.covidLazio.model.Credentials.DIPENDENTE_ROLE;
 import static it.uniroma3.siw.covidLazio.model.Credentials.UTENTE_ROLE;
 
 import org.springframework.context.annotation.Bean;
@@ -13,9 +12,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -28,7 +24,7 @@ import javax.sql.DataSource;
 public class AuthenticationConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     
     @Override
@@ -37,7 +33,7 @@ public class AuthenticationConfiguration extends WebSecurityConfigurerAdapter {
                 // authorization paragraph: qui definiamo chi può accedere a cosa
                 .authorizeRequests()
                 // chiunque (autenticato o no) può accedere alle pagine index, login, register, ai css e alle immagini
-                .antMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/css/**", "/images/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/css/**", "/images/**","/oauth2/**").permitAll()
                 // chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login e register 
                 .antMatchers(HttpMethod.POST, "/login", "/register").permitAll()
                 // solo gli utenti autenticati con ruolo ADMIN possono accedere a risorse con path /admin/**
@@ -57,7 +53,9 @@ public class AuthenticationConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 // se il login ha successo, si viene rediretti al path /default
                 .defaultSuccessUrl("/default")
-
+                .and()
+                .oauth2Login().loginPage("/oauth2/authorization/google")
+                .defaultSuccessUrl("/default/oauth2")
                 // logout paragraph: qui definiamo il logout
                 .and().logout()
                 // il logout è attivato con una richiesta GET a "/logout"

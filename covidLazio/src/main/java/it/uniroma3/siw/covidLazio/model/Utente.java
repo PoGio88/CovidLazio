@@ -3,8 +3,7 @@ package it.uniroma3.siw.covidLazio.model;
 import javax.persistence.*;
 
 import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -30,12 +29,13 @@ public class Utente {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Vaccino vaccino;
 
+	@ToString.Exclude
 	@OneToOne(cascade = CascadeType.ALL)
 	private Locale locale;
 
+	@ToString.Exclude
 	@ManyToOne
 	private Localita localita;
-
 
 	@OneToOne(mappedBy = "utente",cascade = CascadeType.ALL)
 	private Tampone tampone;

@@ -2,6 +2,7 @@ package it.uniroma3.siw.covidLazio.service;
 
 import java.util.Optional;
 
+import it.uniroma3.siw.covidLazio.model.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,12 @@ public class CredentialsService {
 	@Transactional
 	public Credentials getCredentials(String username) {
 		Optional<Credentials> result = this.credentialsRepository.findByUsername(username);
+		return result.orElse(null);
+	}
+
+	@Transactional
+	public Credentials getCredentials(Utente utente) {
+		Optional<Credentials> result = this.credentialsRepository.findByUtente(utente);
 		return result.orElse(null);
 	}
 		

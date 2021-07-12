@@ -30,6 +30,9 @@ public class UtenteService {
 	public Utente utentePerId(Long id) {
 		return this.utenteRepository.findById(id).orElse(null);
 	}
+
+	@Transactional
+	public Utente utentePerEmail(String email) { return this.utenteRepository.findByEmail(email).orElse(null); }
 	
 	@Transactional
 	public Utente aggiornaUtente(Utente utente) {

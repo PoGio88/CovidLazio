@@ -8,5 +8,4 @@ import java.util.Optional;
 public interface LocaleRepository extends CrudRepository<Locale,Long> {
 
     public Optional<Locale> findById(Long id);
-
 }
