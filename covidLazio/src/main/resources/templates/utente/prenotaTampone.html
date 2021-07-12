@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+</head>
+<body>
+
+<div class="all">
+
+  <header th:replace="fragments/base.html :: menuUtente(utente = ${utente})">
+  </header>
+
+
+  <div class="main_content">
+    <div class="header">Inserisci il tuo negozio</div>
+    <div class="info">
+      <div class="prenotazione-tampone-box">
+        <span>Stai prenotando presso</span>
+        <span th:text=" ${farmacia.nome} + ' ' + ${farmacia.localitaNegozio.nome} + ' ' + ${farmacia.localitaNegozio.CAP}"></span>
+        <form th:action="@{'/prenotaTampone/'+${farmacia.id}}" method="post" th:object="${tampone}">
+          <span>Scegli una data</span>
+        <span><input type="date" th:field="*{dataPrenotazione}"></span>
+          <span><input type="submit" value="prenota"> </span>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer th:replace="fragments/base.html :: fondo">
+</footer>
+
+</body>
+</html>

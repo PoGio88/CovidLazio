@@ -3,6 +3,8 @@ package it.uniroma3.siw.covidLazio.model;
 import javax.persistence.*;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -33,10 +35,10 @@ public class Utente {
 
 	@ManyToOne
 	private Localita localita;
-	
 
-	
 
+	@OneToOne(mappedBy = "utente",cascade = CascadeType.ALL)
+	private Tampone tampone;
 }
 
 

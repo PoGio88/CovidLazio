@@ -43,8 +43,8 @@ public class AuthenticationConfiguration extends WebSecurityConfigurerAdapter {
                 // solo gli utenti autenticati con ruolo ADMIN possono accedere a risorse con path /admin/**
                 .antMatchers(HttpMethod.GET, "/aggiungiNegozio").hasAuthority(UTENTE_ROLE)
                 .antMatchers(HttpMethod.POST, "/aggiungiNegozio").hasAuthority(UTENTE_ROLE)
-                .antMatchers(HttpMethod.GET, "/dipendente/{id}").access("hasAnyAuthority('DIPENDENTE'.concat('/').concat(#id))")
-                .antMatchers(HttpMethod.POST, "/dipendente/{id}").access("hasAnyAuthority('DIPENDENTE'.concat('/').concat(#id))")
+                .antMatchers(HttpMethod.GET, "/dipendente/{id}","/dipendente/{id}/**").access("hasAnyAuthority('DIPENDENTE'.concat('/').concat(#id))")
+                .antMatchers(HttpMethod.POST, "/dipendente/{id}","/dipendente/{id}/**").access("hasAnyAuthority('DIPENDENTE'.concat('/').concat(#id))")
                 
                 // tutti gli utenti autenticati possono accere alle pagine rimanenti 
                 .anyRequest().authenticated()

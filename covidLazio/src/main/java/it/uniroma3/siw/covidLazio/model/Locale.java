@@ -17,6 +17,9 @@ public abstract class Locale {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(insertable = false, updatable = false)
+    private String dtype;
+
     private String nome;
 
     private String giornoChiusura;

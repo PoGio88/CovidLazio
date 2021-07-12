@@ -14,7 +14,7 @@
         <div class="header">Inserisci il tuo negozio</div>
         <div class="info">
             <div class="login-box">
-                <form th:action="@{/aggiungiNegozio}" method="POST" th:object="${locale}">
+                <form th:action="@{/aggiungiFarmacia}" method="POST" th:object="${locale}">
                     <div>
                         <span>Nome negozio</span>
                         <span><input type="text" th:field="${locale.nome}" required/></span>
@@ -28,12 +28,20 @@
                         <span><input type="text" th:field="${locale.giornoChiusura}"></span>
                     </div>
                     <div>
-                        <span> Orario apertura </span>
+                        <span>Orario apertura </span>
                         <span> <input type="time" th:field="${locale.orarioApertura}"> </span>
                     </div>
                     <div>
-                    <span> Orario chiusura </span>
-                    <span> <input type="time" th:field="${locale.orarioChiusura}"> </span>
+                        <span>Orario chiusura </span>
+                        <span> <input type="time" th:field="${locale.orarioChiusura}"> </span>
+                    </div>
+                    <div>
+                        <span>Prezzo tampone </span>
+                        <span> <input type="number" step="0.01" th:field="${locale.prezzoTampone}"> </span>
+                    </div>
+                    <div>
+                        <span>Numero tamponi disponibili </span>
+                        <span> <input type="number" th:field="${locale.tamponiDisponibili}"> </span>
                     </div>
             </div>
             <div>

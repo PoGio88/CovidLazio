@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+</head>
+<body>
+
+<div class="all">
+
+  <header th:replace="fragments/base.html :: menuUtente(utente = ${utente})">
+  </header>
+
+
+  <div class="main_content">
+    <div class="header">Inserisci il tuo negozio</div>
+    <div class="info">
+      <div class="prodotti-box">
+        <div class="prodotti-da-visualizzare" th:each="farmacia: ${farmacie}">
+          <span th:text="'presso '+ ${farmacia.nome} + ' ' + ${farmacia.localitaNegozio.nome} + ' ' + ${farmacia.localitaNegozio.CAP}"></span>
+          <span th:text="'sono disponibili ' + ${farmacia.tamponiDisponibili} + ' tamponi '"></span>
+          <span th:text="'€' + ${farmacia.prezzoTampone}"></span>
+          <a th:href="@{'/prenotaTampone/'+${farmacia.id}}">Prenota</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer th:replace="fragments/base.html :: fondo">
+</footer>
+
+</body>
+</html>

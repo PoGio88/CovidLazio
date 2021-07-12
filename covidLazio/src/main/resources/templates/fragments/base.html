@@ -24,13 +24,14 @@
     </div>
 </header>
 
-<header th:fragment=menuNegozio>
+<header th:fragment=menuNegozio(farmacia)>
     <div class="sidebar">
         <h2>Covid Lazio</h2>
         <ul>
             <li><a th:href="@{/default}"><i class="fas fa-home"></i>Home</a></li>
             <li><a th:href="'/dipendente/'+${locale.id}+'/aggiungiProdotto'"><i class="fas fa-plus"></i>Aggiungi Prodotto</a></li>
             <li><a th:href="'/dipendente/'+${locale.id}+'/modificaProdotti'"><i class="fas fa-pump-medical"></i>Modifica Prodotti</a></li>
+            <li th:if="${farmacia}"><a th:href="'/dipendente/'+${locale.id}+'/gestisciTamponi'"><i class="fas fa-pump-medical"></i>Gestisci Tamponi</a></li>
             <li><a th:href="@{'/dipendente/'+${locale.id}}"><i class="fas fa-store"></i>Gestisci negozio</a></li>
         </ul>
     </div>
@@ -44,9 +45,11 @@
             <li><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
             <li><a th:href="@{/visualizzaProdotti}"><i class="fas fa-pump-medical"></i>Prodotti</a></li>
             <li><a th:href="@{/aggiungiVaccino}"><i class="fas fa-syringe"></i>Vaccino</a></li>
+            <li th:unless="${utente.tampone}"><a th:href="@{/tamponiDisponibili}"><i class="fas fa-syringe"></i>Prenota tampone</a></li>
+            <li th:if="${utente.tampone}"><a th:href="@{/visualizzaTampone}"><i class="fas fa-syringe"></i>Visualizza tampone</a></li>
             <li th:if="${utente.locale}"><a th:href="@{'/dipendente/'+${utente.locale.id}}" th:text="${utente.locale.nome}"><i class="fas fa-store"></i>Negozio</a></li>
-            <li th:unless="${utente.locale}"><a th:href="@{/aggiungiNegozio}"><i class="fas fa-store"></i></i>Aggiungi
-                Negozio</a></li>
+            <li th:unless="${utente.locale}"><a th:href="@{/aggiungiNegozio}"><i class="fas fa-store"></i></i>Aggiungi Negozio</a></li>
+            <li th:unless="${utente.locale}"><a th:href="@{/aggiungiFarmacia}"><i class="fas fa-store"></i></i>Aggiungi Farmacia</a></li>
         </ul>
     </div>
 </header>

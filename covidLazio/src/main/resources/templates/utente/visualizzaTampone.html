@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+</head>
+<body>
+
+<div class="all">
+
+    <header th:replace="fragments/base.html :: menuUtente(utente = ${utente})">
+    </header>
+
+
+    <div class="main_content">
+        <div class="header">Welcome!! Have a nice day.</div>
+        <div class="info">
+            <div th:if="${utente.tampone}" class="login-box">
+                <div><h2>Hai già prenotato il tuo tampone!</h2></div>
+                <div>Ecco i tuoi dati:</div>
+                <div th:text="'Farmacia: '+${utente.tampone.farmacia.nome}" style="font-weight: bold"></div>
+                <div th:text="'Data prenotazione: '+${#temporals.format(utente.tampone.dataPrenotazione, 'dd-MM-yyyy')}"
+                     style="font-weight: bold"></div>
+                <div th:if="${utente.tampone.esito}"
+                     th:text="'Esito '+${utente.tampone.esito}" style="font-weight: bold"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/base.html :: fondo">
+</footer>
+
+</body>
+</html>

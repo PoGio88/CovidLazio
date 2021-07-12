@@ -1,8 +1,10 @@
 package it.uniroma3.siw.covidLazio.service;
 
+import it.uniroma3.siw.covidLazio.model.Farmacia;
 import it.uniroma3.siw.covidLazio.model.Locale;
 import it.uniroma3.siw.covidLazio.model.Negozio;
 import it.uniroma3.siw.covidLazio.model.Prodotto;
+import it.uniroma3.siw.covidLazio.repository.FarmaciaRepository;
 import it.uniroma3.siw.covidLazio.repository.LocaleRepository;
 import it.uniroma3.siw.covidLazio.repository.ProdottoRepository;
 
@@ -22,6 +24,9 @@ public class DipendenteService {
     @Autowired 
     private ProdottoRepository prodottoRepositoy;
 
+    @Autowired
+    private FarmaciaRepository farmaciaRepository;
+
     @Transactional
     public Locale localePerId(Long id) {
         return localeRepository.findById(id).orElse(null);
@@ -34,6 +39,5 @@ public class DipendenteService {
     public List<Prodotto> prodottiPerLocale(Locale locale){
     	return this.prodottoRepositoy.findByLocale(locale);
     }
-
 
 }

@@ -3,9 +3,6 @@ package it.uniroma3.siw.covidLazio.controller;
 import it.uniroma3.siw.covidLazio.model.*;
 import it.uniroma3.siw.covidLazio.service.DipendenteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.RequestEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,16 +18,13 @@ public class DipendenteController {
     @Autowired
     private DipendenteService dipendenteService;
 
-    @Autowired
-    private UtenteController utenteController;
-
-
 
     @RequestMapping(value = "/dipendente/{id}",method = RequestMethod.GET)
     public String gestisciNegozio(@PathVariable("id") Long id, Model model) {
         Locale locale = dipendenteService.localePerId(id);
         model.addAttribute("locale",locale);
         model.addAttribute("prodotti", locale.getProdotti());
+        model.addAttribute("isFarmacia", locale.getDtype().equalsIgnoreCase("Farmacia"));
         //System.out.println(dipendenteService.prodottiPerLocale(locale).size());
         //System.out.println(dipendenteService.prodottiPerLocale(locale).isEmpty());
         return "dipendente/gestioneNegozio.html";
@@ -41,6 +35,7 @@ public class DipendenteController {
         Locale locale = dipendenteService.localePerId(id);
         model.addAttribute("locale",locale);
         model.addAttribute("prodotto",new Prodotto());
+        model.addAttribute("isFarmacia", locale.getDtype().equalsIgnoreCase("Farmacia"));
         return "dipendente/aggiungiProdotto.html";
     }
 
@@ -52,6 +47,7 @@ public class DipendenteController {
         dipendenteService.aggiornaLocale(locale);
         model.addAttribute("locale", locale);
         model.addAttribute("prodotti",locale.getProdotti());
+        model.addAttribute("isFarmacia", locale.getDtype().equalsIgnoreCase("Farmacia"));
         return "dipendente/gestioneNegozio.html";
     }
 
@@ -60,6 +56,7 @@ public class DipendenteController {
         Locale locale = dipendenteService.localePerId(id);
         model.addAttribute("prodotti",locale.getProdotti());
         model.addAttribute("locale",locale);
+        model.addAttribute("isFarmacia", locale.getDtype().equalsIgnoreCase("Farmacia"));
         return "dipendente/modificaProdotti.html";
     }
 
@@ -74,6 +71,42 @@ public class DipendenteController {
         dipendenteService.aggiornaLocale(locale);
         model.addAttribute("prodotti",locale.getProdotti());
         model.addAttribute("locale",locale);
+        model.addAttribute("isFarmacia", locale.getDtype().equalsIgnoreCase("Farmacia"));
+        return "dipendente/gestioneNegozio.html";
+    }
+
+    @RequestMapping(value = "/dipendente/{id}/gestisciTamponi",method = RequestMethod.GET)
+    public String gestisciTamponi(@PathVariable("id") Long id, Model model) {
+        Farmacia farmacia = (Farmacia) dipendenteService.localePerId(id);
+        model.addAttribute("isFarmacia",true);
+        model.addAttribute("locale",farmacia);
+        return "dipendente/gestisciTamponi.html";
+    }
+
+    @RequestMapping(value = "/dipendente/{id}/gestisciTamponi",method = RequestMethod.POST)
+    public String gestisciTamponi(@PathVariable("id") Long id,@ModelAttribute(value = "locale") Farmacia locale, Model model) {
+        Farmacia farmacia = (Farmacia) dipendenteService.localePerId(id);
+        System.out.println(farmacia);
+        farmacia.setTamponiDisponibili(locale.getTamponiDisponibili());
+        farmacia.setPrezzoTampone(locale.getPrezzoTampone());
+        System.out.println(locale);
+        dipendenteService.aggiornaLocale(farmacia);
+        System.out.println("aggiornato");
+        model.addAttribute("locale",farmacia);
+        model.addAttribute("isFarmacia",true);
+        return "dipendente/gestioneNegozio.html";
+    }
+
+    @RequestMapping(value = "/dipendente/{id}/aggiungiEsiti",method = RequestMethod.POST)
+    public String aggiungiEsiti(@PathVariable("id") Long id,@ModelAttribute(value = "locale") Farmacia locale, Model model) {
+        Farmacia farmacia = (Farmacia) dipendenteService.localePerId(id);
+        for(int i=0;i<farmacia.getTamponiPrenotati().size();i++) {
+            farmacia.getTamponiPrenotati().get(i).setEsito(locale.getTamponiPrenotati().get(i).getEsito());
+        }
+        dipendenteService.aggiornaLocale(farmacia);
+        System.out.println("aggiornato");
+        model.addAttribute("locale",farmacia);
+        model.addAttribute("isFarmacia",true);
         return "dipendente/gestioneNegozio.html";
     }
 
