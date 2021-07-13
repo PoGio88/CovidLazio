@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+<head th:replace="fragments/base.html :: headerfiles(title='Gestisci tamponi')">
 </head>
 <body>
 
@@ -12,17 +12,17 @@
 
     <div class="main_content">
         <div class="header" id="tamponi-header">
-            <span>Gestisci tamponi</span>
+            <div><span>Gestisci tamponi</span></div>
             <form method="post" th:action="@{'/dipendente/'+${locale.id}+'/gestisciTamponi'}" th:object="${locale}">
                 <span>Prezzo tamponi</span>
-                <input type="number" step="0.01" th:field="${locale.prezzoTampone}">
+                <input type="number" step="0.01" min="0.01" th:field="${locale.prezzoTampone}" style="color: black">
                 <span>Tamponi disponibili</span>
-                <input type="number" th:field="${locale.tamponiDisponibili}">
-                <input type="submit" value="modifica"/>
+                <input type="number" min="0" th:field="${locale.tamponiDisponibili}" style="color: black">
+                <input type="submit" value="modifica" class="aggiungi-negozio-btn"/>
             </form>
         </div>
         <div class="info">
-            <div class="tamponi-box">
+            <div class="tamponi-box" th:if="${not locale.tamponiPrenotati.isEmpty()}">
                 <form th:action="@{'/dipendente/'+${locale.id}+'/aggiungiEsiti'}" th:object="${locale}" method="post">
                     <div class="tamponi-prenotati" th:each="tampone,iter: ${locale.tamponiPrenotati}">
                         <span th:text="${iter.index}+' '" style="font-weight: bold"></span>

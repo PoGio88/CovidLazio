@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+<head th:replace="fragments/base.html :: headerfiles(title='Vaccino')">
 </head>
 <body>
 
@@ -11,7 +11,7 @@
 
 
     <div class="main_content">
-        <div class="header">Welcome!! Have a nice day.</div>
+        <div class="header">Vaccino</div>
         <div class="info">
             <div th:if="${vaccino} " class="login-box">
                 <form th:action="@{/aggiungiVaccino}" method="POST" th:object="${vaccino}">
@@ -27,6 +27,8 @@
                     <span><input type="date" th:field="${vaccino.dataPrimaDose}" required/></span>
                     <span>Data seconda dose:</span>
                     <span><input type="date" th:field="${vaccino.dataSecondaDose}"></span>
+                    <span th:if="${#fields.hasErrors('dataSecondaDose')}"
+                          th:errors="${vaccino.dataSecondaDose}" th:style="'color:red'"></span>
                     <span> <input type="submit" value="Aggiungi"> </span>
                 </form>
             </div>
@@ -45,6 +47,8 @@
                     <span><input type="date" th:field="${vaccinoDaAggiornare.dataPrimaDose}" required/></span>
                     <span>Data seconda dose:</span>
                     <span><input type="date" th:field="${vaccinoDaAggiornare.dataSecondaDose}"></span>
+                    <span th:if="${#fields.hasErrors('dataSecondaDose')}"
+                          th:errors="${vaccinoDaAggiornare.dataSecondaDose}" th:style="'color:red'"></span>
                     <span> <input type="submit" value="Aggiungi"> </span>
                 </form>
             </div>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+<head th:replace="fragments/base.html :: headerfiles(title='Login')">
 </head>
 <body>
 
@@ -11,7 +11,7 @@
 
 
   <div class="main_content">
-    <div class="header">Welcome!! Have a nice day.</div>
+    <div class="header">Login</div>
     <div class="info">
     <div class="login-box">
     <img th:src="@{images/avatar.png}" class="avatar">
@@ -21,7 +21,7 @@
           <span>Password:</span>
           <span><input name="password" type="password" required /></span>
           <span><input type="submit" value ="Login"/></span>
-          <a th:href="@{/oauth2/authorization/google}">Login con Google</a>
+          <a th:href="@{/oauth2/authorization/google}"><i class="fab fa-google"></i> Login con Google</a>
       </form>
     </div>
     </div>

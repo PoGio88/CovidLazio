@@ -11,46 +11,53 @@
 
 
     <div class="main_content">
-        <div class="header">Welcome!! Have a nice day.</div>
+        <div class="header">Registrati</div>
         <div class="info">
-        <div class="register-box">
-    <img th:src="@{images/avatar.png}" class="avatar">
-            <form th:action="@{/register}" method="POST">
-                <span>Username</span>
-                        <span><input type="text" placeholder="username" th:field="${credentials.username}"/></span>
-                        <span th:if="${#fields.hasErrors('credentials.username')}"
-                            th:errors="${credentials.username}" th:style="'color:red'"></span>
-                
-                        <span>Password</span>
-                        <span><input type="password" placeholder="password" required th:field="${credentials.password}"/>
-                        </span>
-                        <span th:if="${#fields.hasErrors('credentials.password')}"
-                            th:errors="${credentials.password}" th:style="'color:red'"></span>
-                  
-                        <span>Nome</span>
-                        <span><input type="text" placeholder="nome" required th:field="${user.nome}"/></span>
-                        <span th:if="${#fields.hasErrors('user.nome')}"
-                            th:errors="${user.nome}" th:style="'color:red'"></span>
-                    
-                        <span>Cognome</span>
-                        <span><input type="text" placeholder="cognome" required th:field="${user.cognome}"/></span>
-                        <span th:if="${#fields.hasErrors('user.cognome')}"
-                            th:errors="${user.cognome}" th:style="'color:red'"></span>
-                    
-                        <span>Email</span>
-                        <span><input type="text" placeholder="email" th:field="${user.email}"></span>
+            <div class="register-box">
+                <img th:src="@{images/avatar.png}" class="avatar">
+                <form th:action="@{/register}" method="POST" >
+                    <span>Username</span>
+                    <span><input type="text" placeholder="username" th:field="${credentials.username}"
+                                 required/></span>
+                    <span th:if="${#fields.hasErrors('credentials.username')}"
+                          th:errors="${credentials.username}" th:style="'color:red'"></span>
 
-                        <span>Localita</span>
-                        <span><select th:field = "${user.localita}" >
+                    <span>Password</span>
+                    <span><input type="password" placeholder="password" required
+                                 th:field="${credentials.password}"/>
+                        </span>
+                    <span th:if="${#fields.hasErrors('credentials.password')}"
+                          th:errors="${credentials.password}" th:style="'color:red'"></span>
+
+                    <span>Nome</span>
+                    <span><input type="text" placeholder="nome" required th:field="${user.nome}"/></span>
+                    <span th:if="${#fields.hasErrors('user.nome')}"
+                          th:errors="${user.nome}" th:style="'color:red'"></span>
+
+                    <span>Cognome</span>
+                    <span><input type="text" placeholder="cognome" required th:field="${user.cognome}"/></span>
+                    <span th:if="${#fields.hasErrors('user.cognome')}"
+                          th:errors="${user.cognome}" th:style="'color:red'"></span>
+
+                    <span>Email</span>
+                    <span><input type="text" placeholder="email" th:field="${user.email}" required></span>
+                    <span th:if="${#fields.hasErrors('user.email')}"
+                          th:errors="${user.email}" th:style="'color:red'"></span>
+
+                    <span>Localita</span>
+                    <span><select th:field="${user.localita}">
                             <option th:each="loc : ${localita}" th:text="${loc.nome}" th:value="${loc.id}"></option>
                         </select> </span>
-                    
-                        <span>Data di nascita</span>
-                        <span><input type="date" th:field="${user.dataNascita}"></span>
-                   
-                            <span><input type="submit" value ="Registrati"></input></span>
-            </form>
-        </div>
+
+                    <span>Data di nascita</span>
+                    <span><input type="date" th:field="${user.dataNascita}" required></span>
+                    <span th:if="${#fields.hasErrors('user.dataNascita')}"
+                          th:errors="${user.dataNascita}" th:style="'color:red'"></span>
+
+                    <span><input type="submit" value="Registrati"></input></span>
+
+                </form>
+            </div>
         </div>
     </div>
 </div>

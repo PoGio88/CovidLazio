@@ -1,6 +1,7 @@
 package it.uniroma3.siw.covidLazio.controller;
 
 
+import it.uniroma3.siw.covidLazio.controller.validator.VaccinoValidator;
 import it.uniroma3.siw.covidLazio.helper.RicercaHelper;
 import it.uniroma3.siw.covidLazio.model.*;
 
@@ -19,12 +20,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import it.uniroma3.siw.covidLazio.service.CredentialsService;
 import it.uniroma3.siw.covidLazio.service.UtenteService;
 
 import javax.persistence.EntityManager;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +49,9 @@ public class UtenteController {
     @Autowired
 	private DipendenteService dipendenteService;
 
+    @Autowired
+    private VaccinoValidator vaccinoValidator;
+
 
     @RequestMapping(value = {"/", "index"}, method = RequestMethod.GET)
     public String index(Model model) {
@@ -66,33 +72,45 @@ public class UtenteController {
     }
 
     @RequestMapping(value = {"/aggiungiVaccino"}, method = RequestMethod.POST)
-    public String aggiungiVaccino(@ModelAttribute("vaccino") Vaccino vaccino, Model model) {
+    public String aggiungiVaccino(@ModelAttribute("vaccino") @Valid Vaccino vaccino, BindingResult bindingResult, Model model) {
+        this.vaccinoValidator.validate(vaccino, bindingResult);
         Utente utenteCorrente = getUtenteCorrente();
-        utenteCorrente.setVaccino(vaccino);
-        this.utenteService.aggiornaUtente(utenteCorrente);
-        model.addAttribute("utente", utenteCorrente);
-        return "home.html";
+        if (!bindingResult.hasErrors()) {
+            utenteCorrente.setVaccino(vaccino);
+            this.utenteService.aggiornaUtente(utenteCorrente);
+            model.addAttribute("utente", utenteCorrente);
+            return "home.html";
+        }
+        model.addAttribute("vaccino",vaccino);
+        model.addAttribute("utente",utenteCorrente);
+        return "utente/vaccinoForm.html";
     }
 
     @RequestMapping(value = "/aggiornaVaccino", method = RequestMethod.GET)
     public String aggiornaVaccino(Model model) {
         Utente utenteCorrente = getUtenteCorrente();
-        model.addAttribute(utenteCorrente);
+        model.addAttribute("utente",utenteCorrente);
         model.addAttribute("vaccinoDaAggiornare", utenteCorrente.getVaccino());
         return "utente/vaccinoForm.html";
     }
 
     @RequestMapping(value = "/aggiornaVaccino", method = RequestMethod.POST)
-    public String aggiornaVaccino(@ModelAttribute("vaccinoDaAggiornare") Vaccino vaccino, Model model) {
+    public String aggiornaVaccino(@ModelAttribute("vaccinoDaAggiornare") @Valid Vaccino vaccino, BindingResult bindingResult, Model model) {
+        this.vaccinoValidator.validate(vaccino, bindingResult);
         Utente utenteCorrente = getUtenteCorrente();
-        Vaccino vaccinoAggiornato = utenteCorrente.getVaccino();
-        vaccinoAggiornato.setTipologia(vaccino.getTipologia());
-        vaccinoAggiornato.setDataPrimaDose(vaccino.getDataPrimaDose());
-        vaccinoAggiornato.setDataSecondaDose(vaccino.getDataSecondaDose());
-        utenteCorrente.setVaccino(vaccinoAggiornato);
-        this.utenteService.aggiornaUtente(utenteCorrente);
-        model.addAttribute(utenteCorrente);
-        return "home.html";
+        if (!bindingResult.hasErrors()) {
+            Vaccino vaccinoAggiornato = utenteCorrente.getVaccino();
+            vaccinoAggiornato.setTipologia(vaccino.getTipologia());
+            vaccinoAggiornato.setDataPrimaDose(vaccino.getDataPrimaDose());
+            vaccinoAggiornato.setDataSecondaDose(vaccino.getDataSecondaDose());
+            utenteCorrente.setVaccino(vaccinoAggiornato);
+            this.utenteService.aggiornaUtente(utenteCorrente);
+            model.addAttribute(utenteCorrente);
+            return "home.html";
+        }
+        model.addAttribute("vaccinoDaAggiornare",vaccino);
+        model.addAttribute("utente",utenteCorrente);
+        return "utente/vaccinoForm.html";
     }
 
     @RequestMapping(value = "/aggiungiNegozio", method = RequestMethod.GET)

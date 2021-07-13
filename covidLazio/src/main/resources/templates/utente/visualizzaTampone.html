@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+<head th:replace="fragments/base.html :: headerfiles(title='Tampone')">
 </head>
 <body>
 
@@ -11,7 +11,7 @@
 
 
     <div class="main_content">
-        <div class="header">Welcome!! Have a nice day.</div>
+        <div class="header">Visualizza tampone</div>
         <div class="info">
             <div th:if="${utente.tampone}" class="login-box">
                 <div><h2>Hai già prenotato il tuo tampone!</h2></div>

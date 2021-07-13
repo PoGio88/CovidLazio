@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+<head th:replace="fragments/base.html :: headerfiles(title='Aggiungi negozio')">
 </head>
 <body>
 
@@ -13,7 +13,7 @@
     <div class="main_content">
         <div class="header">Inserisci il tuo negozio</div>
         <div class="info">
-            <div class="login-box">
+            <div class="aggiungi-farmacia-box">
                 <form th:action="@{/aggiungiNegozio}" method="POST" th:object="${locale}">
                     <div>
                         <span>Nome negozio</span>
@@ -32,8 +32,8 @@
                         <span> <input type="time" th:field="${locale.orarioApertura}"> </span>
                     </div>
                     <div>
-                    <span> Orario chiusura </span>
-                    <span> <input type="time" th:field="${locale.orarioChiusura}"> </span>
+                        <span> Orario chiusura </span>
+                        <span> <input type="time" th:field="${locale.orarioChiusura}"> </span>
                     </div>
             </div>
             <div>
@@ -43,7 +43,7 @@
                         </select> </span>
             </div>
 
-            <span> <input type="submit" value="Aggiungi Negozio"> </span>
+            <span> <input type="submit" value="Aggiungi" class="aggiungi-negozio-btn"> </span>
             </form>
         </div>
     </div>

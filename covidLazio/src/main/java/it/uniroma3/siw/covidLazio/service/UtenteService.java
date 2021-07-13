@@ -61,4 +61,8 @@ public class UtenteService {
 		return tampone;
 	}
 
+	@Transactional
+	public boolean emailGiaPresente(String email) {
+		return this.utenteRepository.findByEmail(email).isPresent();
+	}
 }

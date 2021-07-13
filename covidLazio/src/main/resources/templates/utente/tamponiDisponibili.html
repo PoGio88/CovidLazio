@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+<head th:replace="fragments/base.html :: headerfiles(title='Tamponi disponibili')">
 </head>
 <body>
 
@@ -11,14 +11,14 @@
 
 
   <div class="main_content">
-    <div class="header">Inserisci il tuo negozio</div>
+    <div class="header">Tamponi disponibili</div>
     <div class="info">
-      <div class="prodotti-box">
-        <div class="prodotti-da-visualizzare" th:each="farmacia: ${farmacie}">
+      <div class="tamponi-box">
+        <div class="tamponi-da-visualizzare" th:each="farmacia: ${farmacie}">
           <span th:text="'presso '+ ${farmacia.nome} + ' ' + ${farmacia.localitaNegozio.nome} + ' ' + ${farmacia.localitaNegozio.CAP}"></span>
           <span th:text="'sono disponibili ' + ${farmacia.tamponiDisponibili} + ' tamponi '"></span>
           <span th:text="'€' + ${farmacia.prezzoTampone}"></span>
-          <a th:href="@{'/prenotaTampone/'+${farmacia.id}}">Prenota</a>
+          <a th:href="@{'/prenotaTampone/'+${farmacia.id}}" class="aggiungi-negozio-btn" style="text-decoration: none;text-align: center">Prenota</a>
         </div>
       </div>
     </div>

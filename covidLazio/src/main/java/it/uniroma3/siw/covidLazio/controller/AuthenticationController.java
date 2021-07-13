@@ -25,6 +25,7 @@ import it.uniroma3.siw.covidLazio.model.Credentials;
 import it.uniroma3.siw.covidLazio.service.CredentialsService;
 import it.uniroma3.siw.covidLazio.controller.validator.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,24 +99,25 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerUser(@ModelAttribute("user") Utente user,
-                               @ModelAttribute("credentials") Credentials credentials,
+    public String registerUser(@ModelAttribute("user") @Valid Utente utente,
                                BindingResult userBindingResult,
+                               @ModelAttribute("credentials") @Valid Credentials credentials,
                                BindingResult credentialsBindingResult,
                                Model model) {
 
         // validate user and credentials fields
-        this.utenteValidator.validate(user, userBindingResult);
+        this.utenteValidator.validate(utente, userBindingResult);
         this.credentialsValidator.validate(credentials, credentialsBindingResult);
 
         // if neither of them had invalid contents, store the User and the Credentials into the DB
         if (!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
             // set the user and store the credentials;
             // this also stores the User, thanks to Cascade.ALL policy
-            credentials.setUtente(user);
+            credentials.setUtente(utente);
             credentialsService.saveCredentials(credentials);
             return "index.html";
         }
+        model.addAttribute("localita",comuniService.tutteLeLocalita());
         return "registerForm.html";
     }
 }

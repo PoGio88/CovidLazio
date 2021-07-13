@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+<head th:replace="fragments/base.html :: headerfiles(title='Modifica i prodotti')">
 </head>
 <body>
 
@@ -11,7 +11,7 @@
 
 
     <div class="main_content">
-        <div class="header">Aggiungi un prodotto</div>
+        <div class="header">Modifica i prodotti</div>
         <div class="info">
             <div class="prodotti-box">
                 <form th:action="@{'/dipendente/'+${locale.id}+'/modificaProdotti'}" method="POST"

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/base.html :: headerfiles(title='Homepage')">
+<head th:replace="fragments/base.html :: headerfiles(title='Gestisci negozio')">
 </head>
 <body>
 
@@ -13,26 +13,30 @@
     <div class="main_content">
         <div class="header">Gestisci negozio</div>
         <div class="info">
-            <div class="login-box">
+            <div id="gestione-negozio-box">
                 <div>
                     <span>Nome </span>
-                    <span th:text="${locale.nome}"></span>
+                    <span th:text="${locale.nome}" style="font-weight: bold"></span>
                 </div>
                 <div>
                     <span>Localita </span>
-                    <span th:text="${locale.localitaNegozio.nome} + ' in provincia di ' + ${locale.localitaNegozio.provincia}"></span>
+                    <span th:text="${locale.localitaNegozio.nome} + ' in provincia di ' + ${locale.localitaNegozio.provincia}" style="font-weight: bold"></span>
+                </div>
+                <div>
+                    <span>Sito web</span>
+                    <span><a th:text="${locale.sitoWeb}" style="text-decoration: none;font-weight: bold"></a></span>
                 </div>
                 <div>
                     <span>Giorno chiusura </span>
-                    <span th:text="${locale.giornoChiusura}"></span>
+                    <span th:text="${locale.giornoChiusura}" style="font-weight: bold"></span>
                 </div>
                 <div>
                     <span>Orario apertura </span>
-                    <span th:text="${locale.orarioApertura}"></span>
+                    <span th:text="${locale.orarioApertura}" style="font-weight: bold"></span>
                 </div>
                 <div>
                     <span>Orario chiusura </span>
-                    <span th:text="${locale.orarioChiusura}"></span>
+                    <span th:text="${locale.orarioChiusura}" style="font-weight: bold"></span>
                 </div>
             </div>
         </div>
