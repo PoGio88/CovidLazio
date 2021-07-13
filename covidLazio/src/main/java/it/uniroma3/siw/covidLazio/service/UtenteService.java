@@ -50,16 +50,15 @@ public class UtenteService {
 
 	@Transactional
 	public Tampone salvaTamponePrenotato(Utente utente,Farmacia farmacia,Tampone tampone) {
-		tampone.setPrezzoVendita(farmacia.getPrezzoTampone());
-		tampone.setUtente(utente);
-		tampone.setFarmacia(farmacia);
-		farmacia.getTamponiPrenotati().add(tampone);
-		farmacia.setTamponiDisponibili(farmacia.getTamponiDisponibili() - 1);
-		this.farmaciaRepository.save(farmacia);
+		if(utente.getTampone()==null) {
+			tampone.setPrezzoVendita(farmacia.getPrezzoTampone());
+			tampone.setUtente(utente);
+			tampone.setFarmacia(farmacia);
+			farmacia.getTamponiPrenotati().add(tampone);
+			farmacia.setTamponiDisponibili(farmacia.getTamponiDisponibili() - 1);
+			this.farmaciaRepository.save(farmacia);
+		}
 		return tampone;
 	}
-	
-	
-	
 
 }

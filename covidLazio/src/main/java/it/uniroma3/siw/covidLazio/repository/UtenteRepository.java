@@ -11,4 +11,5 @@ public interface UtenteRepository extends CrudRepository<Utente,Long> {
 	public Optional<Utente> findById(Long id);
 
 	public Optional<Utente> findByEmail(String email);
+
 }

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import it.uniroma3.siw.covidLazio.service.CredentialsService;
 import it.uniroma3.siw.covidLazio.service.UtenteService;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -175,7 +176,9 @@ public class UtenteController {
         Utente utenteCorrente = this.getUtenteCorrente();
         Farmacia farmacia = (Farmacia) dipendenteService.localePerId(id);
         utenteService.salvaTamponePrenotato(utenteCorrente,farmacia,tampone);
-        model.addAttribute("utente",utenteCorrente);
+        Utente utente = this.getUtenteCorrente();
+        utente.setTampone(tampone);
+        model.addAttribute("utente",utente);
         return "home.html";
     }
 

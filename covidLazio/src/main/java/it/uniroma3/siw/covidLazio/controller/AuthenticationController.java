@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -65,21 +66,27 @@ public class AuthenticationController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
         model.addAttribute("utente",credentials.getUtente());
-        model.addAttribute("userName",credentials.getUsername());
         return "home.html";
     }
 
     @RequestMapping(value = "/default/oauth2",method = RequestMethod.GET)
     public String defaultDopoOauth(Model model) {
-        OAuth2AuthenticatedPrincipal oAuth2AuthenticatedPrincipal = (OAuth2AuthenticatedPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = oAuth2AuthenticatedPrincipal.getAttribute("email");
-        Utente utente = utenteService.utentePerEmail(email);
-        Credentials credentials = credentialsService.getCredentials(utente);
-        List<GrantedAuthority> actualAuthorities = new ArrayList<>();
-        actualAuthorities.add(new SimpleGrantedAuthority(credentials.getRole()));
-        UserDetails details = User.withUsername(credentials.getUsername()).password(credentials.getPassword()).authorities(actualAuthorities).build();
-        Authentication authentication = new UsernamePasswordAuthenticationToken(details,null,actualAuthorities);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Credentials credentials = null;
+        if(SecurityContextHolder.getContext().getAuthentication().getPrincipal().getClass().equals(DefaultOidcUser.class)) {
+            OAuth2AuthenticatedPrincipal oAuth2AuthenticatedPrincipal = (OAuth2AuthenticatedPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String email = oAuth2AuthenticatedPrincipal.getAttribute("email");
+            Utente utente = utenteService.utentePerEmail(email);
+            credentials = credentialsService.getCredentials(utente);
+            List<GrantedAuthority> actualAuthorities = new ArrayList<>();
+            actualAuthorities.add(new SimpleGrantedAuthority(credentials.getRole()));
+            UserDetails details = User.withUsername(credentials.getUsername()).password(credentials.getPassword()).authorities(actualAuthorities).build();
+            Authentication authentication = new UsernamePasswordAuthenticationToken(details, null, actualAuthorities);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+        else {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            credentials = credentialsService.getCredentials(userDetails.getUsername());
+        }
         model.addAttribute("utente",credentials.getUtente());
         model.addAttribute("userName",credentials.getUsername());
         return "home.html";
